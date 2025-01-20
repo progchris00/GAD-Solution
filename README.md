@@ -1,16 +1,16 @@
 ## Getting started
 
-1. git clone <repository-url>
-2. cd <project-directory>
+1. git clone https://github.com/progchris00/GAD-Solution.git
+2. cd GAD-Solution
 3. Install dependencies:
 ```bash
 npm install
 ```
-Build project:
+4. Build project:
 ```bash
 npx webpack
 ```
-Start webpack dev server:
+5. Start webpack dev server:
 ```bash
 npx webpack serve
 ```
