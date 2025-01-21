@@ -15,125 +15,66 @@
     <header
       class="bg-white mx-2 mt-2 rounded-md col-start-4 col-end-13 row-start-1 row-end-3" style="font-family: 'Inter', sans-serif;">
       <nav class="ml-4">Gender and Development Dashboard</nav>
-        <div class="flex flex-wrap gap-4 sm:flex-col md:flex-row ml-4 mr-4">
+        <div class="flex flex-wrap gap-4 sm:flex-col md:flex-row ml-4 mr-4 h-[120.83px]">
           <div class="mb-4 max-w-[150px] mr-20">
-            <p class="text-gray-700 font-medium mb-2">Purok</p>
-            <div class="grid grid-cols-2 gap-2">
-              <label class="flex items-center">
-                <input type="checkbox" name="1" value="1" class="mr-2">
-                1
-              </label>
-              <label class="flex items-center">
-               <input type="checkbox" name="2" value="2" class="mr-2">
-                2
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="3" value="3" class="mr-2">
-                3
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="4" value="4" class="mr-2">
-                4
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="5" value="5" class="mr-2">
-                5
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="6" value="6" class="mr-2">
-                6
-              </label>
-            </div>
+            <label for="purok" class="block text-gray-700 font-medium mb-2">Purok</label>
+            <select id="purok" class="w-full border border-gray-300 rounded-md p-2">
+              <option value="">Select Purok</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
           </div>
           <div class="mb-4 max-w-[190px] mr-20">
-            <p class="text-gray-700 font-medium mb-2">Age Group</p>
-            <div class="grid grid-cols-[90px_1fr] gap-2">
-              <label class="flex items-center">
-                <input type="checkbox" name="17 below" value="17 below" class="mr-2">
-                17 below
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="18-27" value="18-27" class="mr-2">
-                18-27
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="28-39" value="28-39" class="mr-2">
-                28-39
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="40-49" value="40-49" class="mr-2">
-                40-49
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="50-63" value="50-63" class="mr-2">
-                50-63
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="64 above" value="64 above" class="mr-2">
-                64 above
-              </label>
-            </div>
+              <label for="age" class="block text-gray-700 font-medium mb-2">Age Group</label>
+              <select id="age" class="w-full border border-gray-300 rounded-md p-2">
+                <option value="">Select Age Range</option>
+                <option value="17 below">17 below</option>
+                <option value="18-27">18-27</option>
+                <option value="28-39">28-39</option>
+                <option value="40-49">40-49</option>
+                <option value="50-63">50-63</option>
+                <option value="64 above">64 above</option>
+              </select>
           </div>
             <div class="mb-4 max-w-[150px] mr-20">
-              <p class="text-gray-700 font-medium mb-1">Sector</p>
-              <div class="grid grid-cols-1">
-                <label class="flex items-center">
-                  <input type="checkbox" name="PWD" value="PWD" class="mr-2">
-                  PWD
-                </label>
-                <label class="flex items-center">
-                  <input type="checkbox" name="Senior" value="Senior" class="mr-2">
-                  Senior
-                </label>
-                <label class="flex items-center">
-                  <input type="checkbox" name="Solo Parent" value="Solo Parent" class="mr-2">
-                  Solo Parent
-                </label>
-                <label class="flex items-center">
-                  <input type="checkbox" name="Iba Pa" value="Iba Pa" class="mr-2">
-                  Iba Pa
-                </label>
-            </div>
+              <label for="sector" class="block text-gray-700 font-medium mb-2">Sector</label>
+              <select id="sector" class="w-full border border-gray-300 rounded-md p-2">
+                <option value="">Select Sector</option>
+                <option value="PWD">PWD</option>
+                <option value="Senior">Senior</option>
+                <option value="Solo Parent">Solo Parent</option>
+                <option value="Iba Pa">Iba Pa</option>
+              </select>
           </div>
           <div class="mb-4 max-w-[150px] mr-20">
-            <p class="text-gray-700 font-medium mb-2">Voter</p>
+            <p class="text-gray-700 font-medium mb-1">Voter</p>
             <div class="grid grid-cols-1">
               <label class="flex items-center">
-                <input type="checkbox" name="Registered" value="Registered" class="mr-2">
+                <input type="checkbox" name="Registered" value="Registered" class="mr-2 mb-2">
                 Registered
               </label>
               <label class="flex items-center">
-                <input type="checkbox" name="Non-Registered" value="Non-Registered" class="mr-2">
+                <input type="checkbox" name="Non-Registered" value="Non-Registered" class="mr-2 mb-2">
                 Non-Registered
               </label>
             </div>
           </div>
           <div class="mb-4 max-w-[200px] mr-20">
-            <p class="text-gray-700 font-medium mb-2">Civil Status</p>
-            <div class="grid grid-cols-[100px_1fr] gap-2">
-              <label class="flex items-center">
-                <input type="checkbox" name="Single" value="Single" class="mr-2">
-                Single
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="Married" value="Married" class="mr-2">
-                Married
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="Widowed" value="Widowed" class="mr-2">
-                Widowed
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="Divorced" value="Divorced" class="mr-2">
-                Divorced
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="Separated" value="Separated" class="mr-2">
-                Separated
-              </label>
-            </div>
+            <label for="civil_status" class="block text-gray-700 font-medium mb-2">Civil Status</label>
+            <select id="civil_status" class="w-full border border-gray-300 rounded-md p-2">
+              <option value="">Select Civil Status</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Separated">Separated</option>
+              <option value="Widowed">Widowed</option>
+              <option value="Divorced">Divorced</option>
+            </select>
           </div>
-          <button class="w-32 h-10 p-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 absolute top-100 right-0 mt-16 mr-8">
+          <button class="w-32 h-10 p-1 bg-gray-700 text-white rounded-md hover:bg-gray-900 absolute top-100 right-0 mt-8 mr-8">
             Apply Filters
           </button>
         </div>
