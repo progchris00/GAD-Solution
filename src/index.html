@@ -15,69 +15,68 @@
     <header
       class="bg-white mx-2 mt-2 rounded-md col-start-4 col-end-13 row-start-1 row-end-3" style="font-family: 'Inter', sans-serif;">
       <nav class="ml-4">Gender and Development Dashboard</nav>
-        <div class="flex flex-wrap gap-4 sm:flex-col md:flex-row ml-4 mr-4 h-[120.83px]">
-          <div class="mb-4 max-w-[150px] mr-20">
-            <label for="purok" class="block text-gray-700 font-medium mb-2">Purok</label>
-            <select id="purok" class="w-full border border-gray-300 rounded-md p-2">
-              <option value="">Select Purok</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-            </select>
+      <div class="flex flex-wrap gap-4 sm:flex-col md:flex-row ml-4 mr-4 h-[120.83px] overflow-x-auto overflow-y-auto max-w-full">
+
+        <div class="mb-4 max-w-[150px] mr-20">
+          <label for="purok" class="block text-gray-700 font-medium mb-2 text-[14px]">Purok</label>
+          <button class="w-full border border-gray-300 rounded-md p-1 text-[12px] text-left" onclick="openModal('purok')">
+            Select Purok
+          </button>
+        </div>
+      
+        <div class="mb-4 max-w-[190px] mr-20">
+          <label for="age_range" class="block text-gray-700 font-medium mb-2 text-[14px]">Age Group</label>
+          <button class="w-full border border-gray-300 rounded-md p-1 text-[12px] text-left" onclick="openModal('age_range')">
+            Select Age Range
+          </button>
+        </div>
+      
+        <div class="mb-4 max-w-[150px] mr-20">
+          <label for="sector" class="block text-gray-700 font-medium mb-2 text-[14px]">Sector</label>
+          <button class="w-full border border-gray-300 rounded-md p-1 text-[12px] text-left" onclick="openModal('sector')">
+            Select Sector
+          </button>
+        </div>
+      
+        <div class="mb-4 max-w-[150px] mr-20">
+          <p class="text-gray-700 font-medium mb-1 text-[14px]">Voter</p>
+          <div class="grid grid-cols-1">
+            <label class="flex items-center text-[12px]">
+              <input type="checkbox" name="Registered" value="Registered" class="mr-2 mb-2">
+              Registered
+            </label>
+            <label class="flex items-center text-[12px]">
+              <input type="checkbox" name="Non-Registered" value="Non-Registered" class="mr-2 mb-2">
+              Non-Registered
+            </label>
           </div>
-          <div class="mb-4 max-w-[190px] mr-20">
-              <label for="age" class="block text-gray-700 font-medium mb-2">Age Group</label>
-              <select id="age" class="w-full border border-gray-300 rounded-md p-2">
-                <option value="">Select Age Range</option>
-                <option value="17 below">17 below</option>
-                <option value="18-27">18-27</option>
-                <option value="28-39">28-39</option>
-                <option value="40-49">40-49</option>
-                <option value="50-63">50-63</option>
-                <option value="64 above">64 above</option>
-              </select>
-          </div>
-            <div class="mb-4 max-w-[150px] mr-20">
-              <label for="sector" class="block text-gray-700 font-medium mb-2">Sector</label>
-              <select id="sector" class="w-full border border-gray-300 rounded-md p-2">
-                <option value="">Select Sector</option>
-                <option value="PWD">PWD</option>
-                <option value="Senior">Senior</option>
-                <option value="Solo Parent">Solo Parent</option>
-                <option value="Iba Pa">Iba Pa</option>
-              </select>
-          </div>
-          <div class="mb-4 max-w-[150px] mr-20">
-            <p class="text-gray-700 font-medium mb-1">Voter</p>
-            <div class="grid grid-cols-1">
-              <label class="flex items-center">
-                <input type="checkbox" name="Registered" value="Registered" class="mr-2 mb-2">
-                Registered
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" name="Non-Registered" value="Non-Registered" class="mr-2 mb-2">
-                Non-Registered
-              </label>
-            </div>
-          </div>
-          <div class="mb-4 max-w-[200px] mr-16">
-            <label for="civil_status" class="block text-gray-700 font-medium mb-2">Civil Status</label>
-            <select id="civil_status" class="w-full border border-gray-300 rounded-md p-2">
-              <option value="">Select Civil Status</option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Separated">Separated</option>
-              <option value="Widowed">Widowed</option>
-              <option value="Divorced">Divorced</option>
-            </select>
-          </div>
-          <button class="w-32 h-10 p-1 bg-gray-700 text-white rounded-md hover:bg-gray-900 absolute top-100 right-4 mt-8 mr-4">
+        </div>
+      
+        <div class="mb-4 max-w-[200px] mr-16">
+          <label for="civil_status" class="block text-gray-700 font-medium mb-2 text-[14px]">Civil Status</label>
+          <button class="w-full border border-gray-300 rounded-md p-1 text-[12px] text-left" onclick="openModal('civil_status')">
+            Select Civil Status
+          </button>
+        </div>
+      
+        <div class="max-w-[200px] absolute top-100 right-4 mt-4 mr-4">
+          <button class="w-32 h-10 p-1 bg-gray-700 text-white text-[14px] rounded-md hover:bg-gray-900">
             Apply Filters
           </button>
         </div>
+      </div>
+      
+      <div id="modal-container" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modal-content" class="bg-white rounded-lg w-96 p-4">
+          <h3 id="modal-title" class="text-lg font-semibold mb-4">Select Options</h3>
+          <div id="modal-options" class="space-y-2"></div>
+          <div class="mt-4 flex justify-end space-x-2">
+            <button class="px-4 py-2 bg-gray-300 rounded-md" onclick="closeModal()">Cancel</button>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" onclick="applyModalSelections()">Apply</button>
+          </div>
+        </div>
+      </div>
+      
     </header>
     <aside
       class="bg-white col-start-1 col-end-4 row-start-1 row-end-13 text-sm"
@@ -92,5 +91,50 @@
     <main
       class="bg-white mx-2 mt-2 rounded-md flex gap-2 col-start-4 col-end-13 row-start-3 row-end-13 items-center justify-center border border-1"
     ></main>
+
+    <script>
+      const modalContainer = document.getElementById("modal-container");
+      const modalContent = document.getElementById("modal-content");
+      const modalTitle = document.getElementById("modal-title");
+      const modalOptions = document.getElementById("modal-options");
+    
+      const optionsData = {
+        purok: ["1", "2", "3", "4", "5", "6"],
+        age_range: ["17 below", "18-27", "28-39", "40-49", "50-63", "64 above"],
+        sector: ["PWD", "Senior", "Solo Parent", "Iba Pa"],
+        civil_status: ["Single", "Married", "Separated", "Widowed", "Divorced"],
+      };
+    
+      let currentDropdown = "";
+    
+      function openModal(dropdownId) {
+        currentDropdown = dropdownId;
+        modalTitle.textContent = `Select ${dropdownId.replace("_", " ").toUpperCase()}`;
+        modalOptions.innerHTML = optionsData[dropdownId]
+          .map(
+            (option) => `
+            <label><input type="checkbox" value="${option}" class="modal-option"> ${option}</label><br>
+          `
+          )
+          .join("");
+        modalContainer.classList.remove("hidden");
+      }
+    
+      function closeModal() {
+        modalContainer.classList.add("hidden");
+      }
+    
+      function applyModalSelections() {
+        const selectedOptions = Array.from(
+          document.querySelectorAll(".modal-option:checked")
+        ).map((option) => option.value);
+        const button = document.querySelector(`button[onclick="openModal('${currentDropdown}')"]`);
+        button.textContent = selectedOptions.length
+          ? selectedOptions.join(", ")
+          : `Select ${currentDropdown.replace("_", " ").toUpperCase()}`;
+        closeModal();
+      }
+    </script>
+    
   </body>
 </html>
