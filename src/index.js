@@ -2,8 +2,8 @@ import {
   loadGraphContainer,
   loadByGenderGraph,
   loadByPurokGraph,
-} from "./graph/Graph.js";
-import { loadTable } from "./component/Table.js";
+} from "./component/Graph/Graph.js";
+import { loadTable } from "./component/Table/Table.js";
 
 document.getElementById("view-table-btn").addEventListener("click", () => {
   loadTable();
