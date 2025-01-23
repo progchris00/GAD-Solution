@@ -14,4 +14,8 @@ document.getElementById("view-graph-btn").addEventListener("click", () => {
   loadByGenderGraph();
 });
 
+
 loadTable();
+
+
+
