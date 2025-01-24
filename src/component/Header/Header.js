@@ -8,14 +8,14 @@ export function loadHeader() {
 
 function createHeading() {
   const container = document.createElement("div");
-  container.classList = "flex items-center gap-2";
+  container.classList.add("flex", "items-center", "gap-2");
 
   const logo = document.createElement("img");
   logo.src = logoImg;
   logo.classList.add("size-8");
 
   const title = document.createElement("h1");
-  title.classList = "text-xl font-bold";
+  title.classList.add("text-xl", "font-bold");
   title.textContent = "Gender and Development Dashboard";
 
   container.appendChild(logo);
