@@ -668,56 +668,14 @@
 
   </body>
   <script>
-    const modalContainer = document.getElementById("modal-container");
-      const modalContent = document.getElementById("modal-content");
-      const modalTitle = document.getElementById("modal-title");
-      const modalOptions = document.getElementById("modal-options");
-
-      const optionsData = {
-        purok: ["1", "2", "3", "4", "5", "6"],
-        age_range: ["17 below", "18-27", "28-39", "40-49", "50-63", "64 above"],
-        sector: ["PWD", "Senior", "Solo Parent", "Iba Pa"],
-        voter_status: ["Voter", "Non-voter"],
-        civil_status: ["Single", "Married", "Separated", "Widowed", "Divorced"],
-      };
-
-      let currentDropdown = "";
-
-      function openModal(dropdownId) {
-        currentDropdown = dropdownId;
-        modalTitle.textContent = `Select ${dropdownId.replace("_", " ").toUpperCase()}`;
-        modalOptions.innerHTML = optionsData[dropdownId]
-          .map(
-            (option) => `
-            <label><input type="checkbox" value="${option}" class="modal-option"> ${option}</label><br>
-          `,
-          )
-          .join("");
-        modalContainer.classList.remove("hidden");
-      }
-
-      function closeModal() {
-        modalContainer.classList.add("hidden");
-      }
-
-      function applyModalSelections() {
-        const selectedOptions = Array.from(
-          document.querySelectorAll(".modal-option:checked"),
-        ).map((option) => option.value);
-        const button = document.querySelector(
-          `button[onclick="openModal('${currentDropdown}')"]`,
-        );
-        button.textContent = selectedOptions.length
-          ? selectedOptions.join(", ")
-          : `Select ${currentDropdown.replace("_", " ").toUpperCase()}`;
-        closeModal();
-      }
-      function toggleDropdown(id) {
+    
+function toggleDropdown(id) {
   const content = document.getElementById(id);
   if (content) {
     content.classList.toggle('hidden');
   }
 }
+
 function setupModal(modalBtnId, modalId, closeBtnId, submitBtnId, selectedValuesId, selectedListId, inputId, optionName) {
   const modalBtn = document.getElementById(modalBtnId);
   const modal = document.getElementById(modalId);

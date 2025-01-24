@@ -1,0 +1,676 @@
+
+<aside>
+<div class="flex items-center justify-between p-2">
+  <div>
+    <p class="text-xl font-semibold">Filters</p>
+  </div>
+  <div class="flex justify-center items-center gap-4 text-md">
+    <button id ="clearFilter">
+    <p>Clear All</p>
+    </button>
+    <div class="flex w-2 h-2 rounded-full bg-gray-200"></div>
+    <button id ="saveFilter">
+      <p class="text-blue-700">Save Filters</p>
+    </button>
+    </div>
+</div>
+<div class="flex flex-col overflow-y-auto max-h-screen">
+  <div class="border-gray-200 border-t-2 border-b-2">
+    <button class="w-full p-2" onclick="toggleDropdown('lupa-content')">
+      <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center">
+          <img src="assets/images/land-icon.png" class="w-16" alt="Land Icon">
+          <p class="text-start text-md">Impormasyon Tungkol sa Lupa</p>
+        </div>
+        <img src="assets/images/dropdown-icon.png" class="w-10" alt="Dropdown Icon">
+      </div>
+    </button>
+    <div id="lupa-content" class="hidden p-4">
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col items-start">
+          <button class="flex flex-row items-center" id="modalBtn">
+            <p>Pag-aari ng Lupa</p>
+            <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+          </button>
+          <div id="selectedLupaValues" class="hidden">
+            <div id="selectedLupaList" class="flex flex-wrap"></div>
+          </div>
+        </div>
+        <div id="lupaModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div class="bg-white p-6 rounded-lg w-1/3">
+            <h2 class="text-xl mb-4">Pag-aari ng Lupa</h2>
+            <div class="flex flex-col gap-4">
+              <label for="option1">
+                <input type="checkbox" id="option1" name="options" value="De Titulo"> De Titulo
+              </label>
+              <label for="option2">
+                <input type="checkbox" id="option2" name="options" value="OHA/CELA"> OHA/CELA
+              </label>
+              <label for="option3">
+                <input type="checkbox" id="option3" name="options" value="Rights"> Rights
+              </label>
+              <label for="option4">
+                <input type="checkbox" id="option4" name="options" value="Naninirahan (Tenant)"> Naninirahan (Tenant)
+              </label>
+              <label for="option5">
+                <input type="checkbox" id="option5" name="options" value="Lupa ng Gobyerno"> Lupa ng Gobyerno
+              </label>
+              <label for="option6">
+                <input type="checkbox" id="option6" name="options" value="Wala"> Wala
+              </label>
+              <label for="option7">
+                At iba pa : <input type="text" id="option7" name="options" value="" class="border-2 border-black">
+              </label>
+            </div>
+            <div class="flex justify-between mt-4">
+              <button id="lupaCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+              <button id="lupaSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col items-start">
+            <button class="flex flex-row items-center" id="paninirahanModalBtn">
+              <p>Uri ng Paninirahan</p>
+              <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+            </button>
+            <div id="selectedPaninirahanValues" class="hidden">
+              <div id="selectedPaninirahanList" class="flex flex-wrap"></div>
+            </div>
+          </div>
+          </div>
+          <div id="paninirahanModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded-lg w-1/3">
+              <h2 class="text-xl mb-4">Uri ng Paninirahan</h2>
+              <div class="flex flex-col gap-4">
+                <label for="option1">
+                  <input type="checkbox" id="option1" name="options" value="May-ari">
+                  May-ari
+                </label>
+                <label for="option2">
+                  <input type="checkbox" id="option2" name="options" value="Nakikitira">
+                  Nakikitira
+                </label>
+                <label for="option3">
+                  <input type="checkbox" id="option3" name="options" value="Nangungupahan">
+                  Nangungupahan
+                </label>
+                <label for="option4">
+                  At iba pa :
+                  <input type="text" id="paninirahanOption4" name="options" value="" class="border-2 border-black">
+                </label>
+              </div>
+              <div class="flex justify-between mt-4">
+                <button id="paninirahanCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                <button id="paninirahanSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-start">
+              <button class="flex flex-row items-center" id="bahayModalBtn">
+                <p>Uri ng Bahay</p>
+                <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+              </button>
+              <div id="selectedBahayValues" class="hidden">
+                <div id="selectedBahayList" class="flex flex-wrap"></div>
+              </div>
+            </div>
+            </div>
+            <div id="bahayModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+              <div class="bg-white p-6 rounded-lg w-1/3">
+                <h2 class="text-xl mb-4">Uri ng Bahay</h2>
+                <div class="flex flex-col gap-4">
+                  <label for="option1">
+                    <input type="checkbox" id="option1" name="options" value="Kongkreto">
+                    Kongkreto
+                  </label>
+                  <label for="option2">
+                    <input type="checkbox" id="option2" name="options" value="Gawa sa Kahoy">
+                    Gawa sa Kahoy
+                  </label>
+                  <label for="option3">
+                    <input type="checkbox" id="option3" name="options" value="Kongkreto at Kahoy">
+                    Kongkreto at Kahoy
+                  </label>
+                  <label for="option4">
+                    At iba pa :
+                    <input type="text" id="bahayOption4" name="options" value="" class="border-2 border-black">
+                  </label>
+                </div>
+                <div class="flex justify-between mt-4">
+                  <button id="bahayCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                  <button id="bahaySubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-6">
+              <div class="flex flex-col items-start">
+                <button class="flex flex-row items-center" id="palapagModalBtn">
+                  <p>Bilang ng Palapag ng Bahay</p>
+                  <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+                </button>
+                <div id="selectedPalapagValues" class="hidden">
+                  <div id="selectedPalapagList" class="flex flex-wrap"></div>
+                </div>
+              </div>
+          </div>
+          <div id="palapagModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded-lg w-1/3">
+              <h2 class="text-xl mb-4">Bilang ng Palapag ng Bahay</h2>
+              <div class="flex flex-col gap-4">
+                <label for="option1">
+                  <input type="checkbox" id="option1" name="options" value="Isang Palapag">
+                  Isang Palapag
+                </label>
+                <label for="option2">
+                  <input type="checkbox" id="option2" name="options" value="Dalawang Palapag">
+                  Dalawang Palapag
+                </label>
+                <label for="option3">
+                  <input type="checkbox" id="option3" name="options" value="Tatlong Palapag">
+                  Tatlong Palapag
+                </label>
+                <label for="option4">
+                  <input type="checkbox" id="option4" name="options" value="Higit pa sa Tatlong Palapag">
+                  Higit pa sa Tatlong Palapag
+                </label>
+              </div>
+              <div class="flex justify-between mt-4">
+                <button id="palapagCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                <button id="palapagSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-start">
+              <button class="flex flex-row items-center" id="enerhiyaModalBtn">
+                <p>Pinagkukuhanan ng Enerhiya</p>
+                <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+              </button>
+              <div id="selectedEnerhiyaValues" class="hidden">
+                <div id="selectedEnerhiyaList" class="flex flex-wrap"></div>
+              </div>
+            </div>
+          </div>  
+          <div id="enerhiyaModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded-lg w-1/3">
+              <h2 class="text-xl mb-4">Bilang ng Palapag ng Bahay</h2>
+              <div class="flex flex-col gap-4">
+                <label for="option1">
+                  <input type="checkbox" id="option1" name="options" value="MERALCO">
+                  MERALCO
+                </label>
+                <label for="option2">
+                  <input type="checkbox" id="option2" name="options" value="Dalawang Palapag">
+                  Solar Panel
+                </label>
+                <label for="option3">
+                  <input type="checkbox" id="option3" name="options" value="Tatlong Palapag">
+                  De Baterya
+                </label>
+                <label for="option4">
+                  <input type="checkbox" id="option3" name="options" value="Tatlong Palapag">
+                  Gumagamit ng Kerosene
+                </label>
+                <label for="option5">
+                  At iba pa :
+                  <input type="text" id="Option4" name="options" value="" class="border-2 border-black">
+                </label>
+              </div>
+              <div class="flex justify-between mt-4">
+                <button id="enerhiyaCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                <button id="enerhiyaSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+  <div class="border-gray-200 border-b-2">
+    <button class="w-full p-2" onclick="toggleDropdown('tubig-content')">
+      <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center">
+          <img src="assets/images/water-icon.png" class="w-16" alt="Water Icon">
+          <p class="text-start text-md">Impormasyon Tungkol sa Tubig System</p>
+        </div>
+        <img src="assets/images/dropdown-icon.png" class="w-10" alt="Dropdown Icon">
+      </div>
+    </button>
+    <div id="tubig-content" class="hidden p-4">
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col items-start">
+          <button class="flex flex-row items-center" id="inuminModalBtn">
+            <p>Inuming Tubig</p>
+            <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+          </button>
+          <div id="selectedInuminValues" class="hidden">
+            <div id="selectedInuminList" class="flex flex-wrap"></div>
+          </div>
+        </div> 
+        <div id="inuminModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div class="bg-white p-6 rounded-lg w-1/3">
+            <h2 class="text-xl mb-4">Uri ng Bahay</h2>
+            <div class="flex flex-col gap-4">
+              <label for="option1">
+                <input type="checkbox" id="option1" name="options" value="De Gripo">
+                De Gripo
+              </label>
+              <label for="option2">
+                <input type="checkbox" id="option2" name="options" value="Mineral Water">
+                Mineral Water
+              </label>
+              <label for="option3">
+                <input type="checkbox" id="option3" name="options" value="Poso">
+                Poso
+              </label>
+              <label for="option4">
+                At iba pa :
+                <input type="text" id="bahayOption4" name="options" value="" class="border-2 border-black">
+              </label>
+            </div>
+            <div class="flex justify-between mt-4">
+              <button id="inuminCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+              <button id="inuminSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col items-start">
+            <button class="flex flex-row items-center" id="palikuranModalBtn">
+              <p>Uri ng Palikuran</p>
+              <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+            </button>
+            <div id="selectedPalikuranValues" class="hidden">
+              <div id="selectedPalikuranList" class="flex flex-wrap"></div>
+            </div>
+          </div>
+        </div>  
+        <div id="palikuranModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div class="bg-white p-6 rounded-lg w-1/3">
+            <h2 class="text-xl mb-4">Uri ng Palikuran</h2>
+            <div class="flex flex-col gap-4">
+              <label for="option1">
+                <input type="checkbox" id="option1" name="options" value="De Buhos">
+                De Buhos
+              </label>
+              <label for="option2">
+                <input type="checkbox" id="option2" name="options" value="De Flush">
+                De Flush
+              </label>
+              <label for="option3">
+                <input type="checkbox" id="option3" name="options" value="Wala">
+                Wala
+              </label>
+            </div>
+            <div class="flex justify-between mt-4">
+              <button id="palikuranCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+              <button id="palikuranSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col items-start">
+            <button class="flex flex-row items-center" id="lugarPalikuranModalBtn">
+              <p>Lugar ng Palikuran</p>
+              <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+            </button>
+            <div id="selectedLugarPalikuranValues" class="hidden">
+              <div id="selectedLugarPalikuranList" class="flex flex-wrap"></div>
+            </div>
+          </div> 
+          </div>
+          <div id="lugarPalikuranModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded-lg w-1/3">
+              <h2 class="text-xl mb-4">Lugar ng Palikuran</h2>
+              <div class="flex flex-col gap-4">
+                <label for="option1">
+                  <input type="checkbox" id="" name="options" value="Nasa Loob ng Bahay">
+                  Nasa Loob ng Bahay
+                </label>
+                <label for="palikuranCount">
+                  Bilang ng Palikuran sa Loob:
+                  <input type="number" id="bathroomCount" name="options" value="" class="border-2 border-black" oninput="updateCheckboxValue()">
+                </label>
+                <label for="option2">
+                  <input type="checkbox" id="option2" name="options" value="Nasa Labas ng Bahay">
+                  Nasa Labas ng Bahay
+                </label>
+                <div class="flex flex-col ml-4">
+                <label for="option3">
+                  <input type="checkbox" id="option3" name="options" value="Pansarili">
+                  Pansarili
+                </label>
+                <label for="option4">
+                  <input type="checkbox" id="option4" name="options" value="May nakikigamit">
+                  May nakikigamit
+                </label>
+              </div>
+                <label for="option5">
+                  <input type="checkbox" id="option5" name="options" value="Wala">
+                  Wala
+                </label>
+              </div>
+              <div class="flex justify-between mt-4">
+                <button id="lugarPalikuranCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                <button id="lugarPalikuranSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col items-start">
+              <button class="flex flex-row items-center" id="posoModalBtn">
+                <p>Poso Negro</p>
+                <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+              </button>
+              <div id="selectedPosoValues" class="hidden">
+                <div id="selectedPosoList" class="flex flex-wrap"></div>
+              </div>
+            </div> 
+            <div id="posoModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+              <div class="bg-white p-6 rounded-lg w-1/3">
+                <h2 class="text-xl mb-4">Poso Negro</h2>
+                <div class="flex flex-col gap-4">
+                  <label for="option1">
+                    <input type="checkbox" id="" name="options" value="Meron">
+                    Meron
+                    <div class="flex flex-col ml-2 p-2">
+                    <label for="posoCount">
+                      Bilang ng Palikuran sa Loob:
+                      <input type="number" id="bathroomCount" name="options" value="" class="border-2 border-black">
+                    </label>
+                    </div>
+                  </label>
+                  <label for="option2">
+                    <input type="checkbox" id="option5" name="options" value="Wala">
+                    Wala
+                  </label>
+                </div>
+                <div class="flex justify-between mt-4">
+                  <button id="posoCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                  <button id="posoSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+                </div>
+              </div>
+            </div>
+            </div>
+    </div>
+  </div>
+  </div>
+  <div class="border-gray-200 border-b-2">
+    <button class="w-full p-2" onclick="toggleDropdown('impormasyon-content')">
+      <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center">
+          <img src="assets/images/info-icon.png" class="w-16" alt="Info Icon">
+          <p class="text-start text-md">Ibang Impormasyon</p>
+        </div>
+        <img src="assets/images/dropdown-icon.png" class="w-10" alt="Dropdown Icon">
+      </div>
+    </button>
+    <div id="impormasyon-content" class="hidden p-4">
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col items-start">
+          <button class="flex flex-row items-center" id="hayopModalBtn">
+            <p>Uri ng Alagang Hayop</p>
+            <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+          </button>
+          <div id="selectedHayopValues" class="hidden">
+            <div id="selectedHayopList" class="flex flex-wrap"></div>
+          </div>
+        </div>
+      </div>  
+      <div id="hayopModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-1/3">
+          <h2 class="text-xl mb-4">Uri ng Alagang Hayop</h2>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionAso">
+                  <input type="checkbox" id="optionAso" name="options" value="Aso">
+                  Aso
+                </label>
+              </div>
+              <div class="">
+                <label for="countAso">
+                  Bilang:
+                  <input type="number" id="countAso" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionCat">
+                  <input type="checkbox" id="optionCat" name="options" value="Pusa">
+                  Pusa
+                </label>
+              </div>
+              <div class="">
+                <label for="countPusa">
+                  Bilang:
+                  <input type="number" id="countPusa" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionManok">
+                  <input type="checkbox" id="optionManok" name="options" value="Manok">
+                  Manok
+                </label>
+              </div>
+              <div class="">
+                <label for="countManok">
+                  Bilang:
+                  <input type="number" id="countManok" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionHayop">
+                  At iba pa :
+                  <input type="text" id="optionHayop" name="options" value="" class="border-2 border-black">
+                </label>
+              </div>
+              <div class="">
+                <label for="countIbapa">
+                  Bilang:
+                  <input type="number" id="countIbapa" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4">
+            <button id="hayopCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+            <button id="hayopSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+          </div>
+        </div>
+        </div>
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col items-start">
+          <button class="flex flex-row items-center" id="transportasyonModalBtn">
+            <p>Uri ng Transportasyon na Pag-Aari Ninyo</p>
+            <img src="assets/images/dropdown-icon.png" class="w-6" alt="Dropdown Icon">
+          </button>
+          <div id="selectedTransportasyonValues" class="hidden">
+            <div id="selectedTransportasyonList" class="flex flex-wrap"></div>
+          </div>
+        </div>
+      </div> 
+      <div id="transportasyonModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-1/3">
+          <h2 class="text-xl mb-4">Uri ng Transportasyon na Pag-Aari Ninyo</h2>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionMotorcycle">
+                  <input type="checkbox" id="optionMotorcycle" name="options" value="Motorcycle">
+                  Motorcycle
+                </label>
+              </div>
+              <div class="">
+                <label for="countMotorcycle">
+                  Bilang:
+                  <input type="number" id="countMotorcyle" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionCar">
+                  <input type="checkbox" id="optionCar" name="options" value="Car">
+                  Car
+                </label>
+              </div>
+              <div class="">
+                <label for="countCar">
+                  Bilang:
+                  <input type="number" id="countCar" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionTricycle">
+                  <input type="checkbox" id="optionTricycle" name="options" value="Tricycle">
+                  Tricycle
+                </label>
+              </div>
+              <div class="">
+                <label for="countTricycle">
+                  Bilang:
+                  <input type="number" id="countTricycle" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionJeep">
+                  <input type="checkbox" id="optionJeep" name="options" value="Jeep">
+                  Jeep
+                </label>
+              </div>
+              <div class="">
+                <label for="countJeep">
+                  Bilang:
+                  <input type="number" id="countJeep" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionPick up/SUV">
+                  <input type="checkbox" id="optionTricycle" name="options" value="Pick up/SUV">
+                  Pick up/SUV
+                </label>
+              </div>
+              <div class="">
+                <label for="countPick up/SUV">
+                  Bilang:
+                  <input type="number" id="countPick up/SUV" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-row gap-6 justify-between">
+              <div class="">
+                <label for="optionTransportasyon">
+                  At iba pa :
+                  <input type="text" id="optionTransportasyon" name="options" value="" class="border-2 border-black">
+                </label>
+              </div>
+              <div class="">
+                <label for="countIbapa">
+                  Bilang:
+                  <input type="number" id="countIbapa" name="countOptions" value="" class="border-2 border-black">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4">
+            <button id="transportasyonCloseBtn" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+            <button id="transportasyonSubmitBtn" class="bg-blue-500 text-white p-2 rounded">Save</button>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div> 
+      </div> 
+      </div>
+    </div>
+  </div>
+</div>
+</aside>
+</body>
+
+<script>
+
+function toggleDropdown(id) {
+    const content = document.getElementById(id);
+    if (content) {
+      content.classList.toggle('hidden');
+    }
+  }
+  
+  function setupModal(modalBtnId, modalId, closeBtnId, submitBtnId, selectedValuesId, selectedListId, inputId, optionName) {
+    const modalBtn = document.getElementById(modalBtnId);
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeBtnId);
+    const submitBtn = document.getElementById(submitBtnId);
+    const selectedValues = document.getElementById(selectedValuesId);
+    const selectedList = document.getElementById(selectedListId);
+    const input = inputId ? document.getElementById(inputId) : null;
+  
+    modalBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+  
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  
+    submitBtn.addEventListener('click', () => {
+      selectedList.innerHTML = ''; 
+      const selectedOptions = [];
+  
+      
+      document.querySelectorAll(`#${modalId} input[name="${optionName}"]:checked`).forEach((checkbox) => {
+        selectedOptions.push(checkbox.value);
+      });
+  
+      
+      if (input && input.value.trim()) {
+        const inputValue = input.value.trim();
+        selectedOptions.push('At iba pa: ' + inputValue);
+      }
+  
+      selectedOptions.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('bg-gray-200', 'p-2', 'rounded', 'flex', 'items-center', 'mr-2', 'mt-2');
+        optionDiv.textContent = option;
+  
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'x';
+        removeBtn.classList.add('ml-2', 'text-black-500', 'cursor-pointer');
+        removeBtn.onclick = () => optionDiv.remove();
+        
+        optionDiv.appendChild(removeBtn);
+        selectedList.appendChild(optionDiv);
+      });
+  
+      selectedValues.classList.remove('hidden');
+      modal.classList.add('hidden');
+    });
+  }
+  
+  setupModal('modalBtn', 'lupaModal', 'lupaCloseBtn', 'lupaSubmitBtn', 'selectedLupaValues', 'selectedLupaList', 'option7', 'options');
+  setupModal('paninirahanModalBtn', 'paninirahanModal', 'paninirahanCloseBtn', 'paninirahanSubmitBtn', 'selectedPaninirahanValues', 'selectedPaninirahanList', 'paninirahanOption4', 'options');
+  setupModal('bahayModalBtn', 'bahayModal', 'bahayCloseBtn', 'bahaySubmitBtn', 'selectedBahayValues', 'selectedBahayList', 'bahayOption4', 'options');
+  setupModal('palapagModalBtn', 'palapagModal', 'palapagCloseBtn', 'palapagSubmitBtn', 'selectedPalapagValues', 'selectedPalapagList', null, 'options');
+  setupModal('enerhiyaModalBtn', 'enerhiyaModal', 'enerhiyaCloseBtn', 'enerhiyaSubmitBtn', 'selectedEnerhiyaValues', 'selectedEnerhiyaList', 'enerhiyaOption4', 'options');
+  setupModal('inuminModalBtn', 'inuminModal', 'inuminCloseBtn', 'inuminSubmitBtn', 'selectedInuminValues', 'selectedInuminList', 'inuminOption4', 'options');
+  setupModal('palikuranModalBtn', 'palikuranModal', 'palikuranCloseBtn', 'palikuranSubmitBtn', 'selectedPalikuranValues', 'selectedPalikuranList', null, 'options');
+  setupModal('lugarPalikuranModalBtn', 'lugarPalikuranModal', 'lugarPalikuranCloseBtn', 'lugarPalikuranSubmitBtn', 'selectedLugarPalikuranValues', 'selectedLugarPalikuranList', null, 'options');
+  setupModal('posoModalBtn', 'posoModal', 'posoCloseBtn', 'posoSubmitBtn', 'selectedPosoValues', 'selectedPosoList', null, 'options');
+  setupModal('hayopModalBtn', 'hayopModal', 'hayopCloseBtn', 'hayopSubmitBtn', 'selectedHayopValues', 'selectedHayopList', 'optionHayop', 'options');
+  setupModal('transportasyonModalBtn', 'transportasyonModal', 'transportasyonCloseBtn', 'transportasyonSubmitBtn', 'selectedTransportasyonValues', 'selectedTransportasyonList', 'optionTransportasyon', 'options');
+  
+</script>
