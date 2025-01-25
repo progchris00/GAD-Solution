@@ -34,7 +34,7 @@ function openModal(choices, button) {
     "flex",
     "justify-center",
     "items-center",
-    "z-50"
+    "z-50",
   );
 
   const modal = document.createElement("div");
@@ -44,7 +44,7 @@ function openModal(choices, button) {
     "shadow-lg",
     "p-6",
     "w-1/3",
-    "max-w-md"
+    "max-w-md",
   );
 
   const title = document.createElement("h2");
@@ -78,12 +78,12 @@ function openModal(choices, button) {
     "px-4",
     "font-semibold",
     "mt-4",
-    "w-full"
+    "w-full",
   );
   applyButton.textContent = "Apply";
   applyButton.addEventListener("click", () => {
     const selectedOptions = Array.from(
-      document.querySelectorAll(".modal-option:checked")
+      document.querySelectorAll(".modal-option:checked"),
     ).map((option) => option.value);
 
     button.textContent = selectedOptions.length
@@ -99,7 +99,7 @@ function openModal(choices, button) {
     "top-2",
     "right-2",
     "text-gray-500",
-    "hover:text-black"
+    "hover:text-black",
   );
   closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -117,7 +117,6 @@ function openModal(choices, button) {
 
   document.body.appendChild(overlay);
 }
-
 
 function createDropdowns() {
   const options = [
@@ -144,11 +143,11 @@ function createDropdowns() {
   ];
 
   const container = document.createElement("div");
-  container.classList.add("flex", "justify-between");
+  container.classList.add("flex", "gap-12");
 
   options.forEach((option) => {
     const optionContainer = document.createElement("div");
-    optionContainer.classList.add("flex", "items-center", "gap-2");
+    optionContainer.classList.add("flex", "flex-col");
 
     const label = document.createElement("p");
     label.classList.add("font-semibold");
@@ -162,9 +161,9 @@ function createDropdowns() {
       "p-1",
       "flex",
       "items-center",
-      "gap-2"
+      "gap-2",
     );
-    menu.textContent = "Choose";
+    menu.textContent = `Select ${option.name}`;
     menu.innerHTML += `<svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
