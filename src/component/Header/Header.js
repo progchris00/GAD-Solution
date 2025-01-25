@@ -24,6 +24,101 @@ function createHeading() {
   return container;
 }
 
+function openModal(choices, button) {
+  const overlay = document.createElement("div");
+  overlay.classList.add(
+    "fixed",
+    "inset-0",
+    "bg-black",
+    "bg-opacity-50",
+    "flex",
+    "justify-center",
+    "items-center",
+    "z-50"
+  );
+
+  const modal = document.createElement("div");
+  modal.classList.add(
+    "bg-white",
+    "rounded-md",
+    "shadow-lg",
+    "p-6",
+    "w-1/3",
+    "max-w-md"
+  );
+
+  const title = document.createElement("h2");
+  title.classList.add("text-xl", "font-bold", "mb-4");
+  title.textContent = "Select Options";
+
+  const list = document.createElement("ul");
+  list.classList.add("space-y-2");
+  choices.forEach((choice) => {
+    const listItem = document.createElement("li");
+    const label = document.createElement("label");
+    label.classList.add("flex", "items-center", "gap-2");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = choice;
+    checkbox.classList.add("modal-option");
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(choice));
+    listItem.appendChild(label);
+    list.appendChild(listItem);
+  });
+
+  const applyButton = document.createElement("button");
+  applyButton.classList.add(
+    "bg-blue-600",
+    "text-white",
+    "rounded-md",
+    "py-2",
+    "px-4",
+    "font-semibold",
+    "mt-4",
+    "w-full"
+  );
+  applyButton.textContent = "Apply";
+  applyButton.addEventListener("click", () => {
+    const selectedOptions = Array.from(
+      document.querySelectorAll(".modal-option:checked")
+    ).map((option) => option.value);
+
+    button.textContent = selectedOptions.length
+      ? selectedOptions.join(", ")
+      : "Choose";
+
+    document.body.removeChild(overlay);
+  });
+
+  const closeButton = document.createElement("button");
+  closeButton.classList.add(
+    "absolute",
+    "top-2",
+    "right-2",
+    "text-gray-500",
+    "hover:text-black"
+  );
+  closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>`;
+  closeButton.addEventListener("click", () => {
+    document.body.removeChild(overlay);
+  });
+
+  modal.appendChild(closeButton);
+  modal.appendChild(title);
+  modal.appendChild(list);
+  modal.appendChild(applyButton);
+
+  overlay.appendChild(modal);
+
+  document.body.appendChild(overlay);
+}
+
+
 function createDropdowns() {
   const options = [
     {
@@ -36,15 +131,15 @@ function createDropdowns() {
     },
     {
       name: "Sector",
-      choices: [],
+      choices: ["PWD", "Senior", "Solo Parent", "Iba Pa"],
     },
     {
       name: "Voter status",
-      choices: [],
+      choices: ["Registered", "Non-registered"],
     },
     {
       name: "Civil status",
-      choices: [],
+      choices: ["Single", "Married", "Separated", "Widowed", "Divorced"],
     },
   ];
 
@@ -67,7 +162,7 @@ function createDropdowns() {
       "p-1",
       "flex",
       "items-center",
-      "gap-2",
+      "gap-2"
     );
     menu.textContent = "Choose";
     menu.innerHTML += `<svg
@@ -82,17 +177,17 @@ function createDropdowns() {
                 clip-rule="evenodd"
               />
             </svg>`;
-    menu.addEventListener("click", () => openModal(option.choices));
+    menu.addEventListener("click", () => openModal(option.choices, menu));
 
     optionContainer.appendChild(label);
     optionContainer.appendChild(menu);
     container.appendChild(optionContainer);
   });
 
-  const applyContainer = document.createElement("div");
-  applyContainer.classList.add("self-end");
-  const applyButton = document.createElement("button");
-  applyButton.classList.add(
+  const applyFiltersContainer = document.createElement("div");
+  applyFiltersContainer.classList.add("self-end");
+  const applyFiltersButton = document.createElement("button");
+  applyFiltersButton.classList.add(
     "bg-gray-700",
     "text-white",
     "rounded-md",
@@ -103,7 +198,7 @@ function createDropdowns() {
     "items-center",
     "gap-2",
   );
-  applyButton.innerHTML = `<svg
+  applyFiltersButton.innerHTML = `<svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -115,10 +210,10 @@ function createDropdowns() {
                 clip-rule="evenodd"
               />
             </svg>`;
-  applyButton.innerHTML += "Apply filters";
-  applyContainer.appendChild(applyButton);
+  applyFiltersButton.innerHTML += "Apply filters";
+  applyFiltersContainer.appendChild(applyFiltersButton);
 
-  container.appendChild(applyContainer);
+  container.appendChild(applyFiltersContainer);
 
   return container;
 }
