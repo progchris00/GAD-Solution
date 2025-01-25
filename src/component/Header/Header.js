@@ -3,7 +3,7 @@ import logoImg from "../../assets/images/logo.png";
 export function loadHeader() {
   const headerContainer = document.getElementById("header");
   headerContainer.appendChild(createHeadingSection());
-  headerContainer.appendChild(createDropdownSection());
+  headerContainer.appendChild(createMenuSection());
 }
 
 function createHeadingSection() {
@@ -24,18 +24,18 @@ function createHeadingSection() {
   return container;
 }
 
-function createDropdownSection() {
+function createMenuSection() {
   const container = document.createElement("div");
   container.classList.add("flex", "gap-12");
 
-  container.appendChild(createDropdowns());
+  container.appendChild(createMenus());
 
   container.appendChild(createFilterButton());
 
   return container;
 }
 
-function createDropdowns() {
+function createMenus() {
   const options = [
     {
       name: "Purok",
