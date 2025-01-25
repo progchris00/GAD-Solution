@@ -2,11 +2,11 @@ import logoImg from "../../assets/images/logo.png";
 
 export function loadHeader() {
   const headerContainer = document.getElementById("header");
-  headerContainer.appendChild(createHeading());
-  headerContainer.appendChild(createDropdowns());
+  headerContainer.appendChild(createHeadingSection());
+  headerContainer.appendChild(createDropdownSection());
 }
 
-function createHeading() {
+function createHeadingSection() {
   const container = document.createElement("div");
   container.classList.add("flex", "items-center", "gap-2");
 
@@ -24,10 +24,11 @@ function createHeading() {
   return container;
 }
 
-function createDropdowns() {
+function createDropdownSection() {
   const container = document.createElement("div");
   container.classList.add("flex", "gap-12");
-  container.appendChild(createMenus());
+
+  container.appendChild(createDropdowns());
 
   const applyFiltersContainer = document.createElement("div");
   applyFiltersContainer.classList.add("self-end");
@@ -63,7 +64,7 @@ function createDropdowns() {
   return container;
 }
 
-function createMenus() {
+function createDropdowns() {
   const options = [
     {
       name: "Purok",
