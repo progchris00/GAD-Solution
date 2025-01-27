@@ -10,5 +10,7 @@ document.getElementById("view-graph-btn").addEventListener("click", () => {
   loadGraphSection();
 });
 
-loadTable();
-loadHeader();
+const loadPage = (function () {
+  loadTable();
+  loadHeader();
+})();
