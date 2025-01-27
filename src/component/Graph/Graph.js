@@ -7,7 +7,7 @@ export function loadGraphContainer() {
   main.innerHTML = graphContainer;
 }
 
-export function loadGraphByGender() {
+function loadGraphByGender() {
   const overallGraph = document.getElementById("by-gender-graph");
   new Chart(overallGraph, {
     type: "pie",
@@ -32,7 +32,7 @@ export function loadGraphByGender() {
   });
 }
 
-export function loadGraphByPurok() {
+function loadGraphByPurok() {
   const overallGraph = document.getElementById("by-purok-graph");
   new Chart(overallGraph, {
     type: "bar",
