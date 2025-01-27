@@ -2,7 +2,13 @@ import Chart from "chart.js/auto";
 
 import graphContainer from "./GraphContainer.html";
 
-export function loadGraphContainer() {
+export function loadGraphSection() {
+  loadGraphContainer();
+  loadGraphByGender();
+  loadGraphByPurok();
+}
+
+function loadGraphContainer() {
   const main = document.getElementById("main");
   main.innerHTML = graphContainer;
 }
