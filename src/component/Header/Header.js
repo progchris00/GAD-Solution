@@ -35,6 +35,9 @@ function createMenuSection() {
   return container;
 }
 
+// Variable to store selected choices
+const selectedChoices = {};
+
 function createMenus() {
   const options = [
     {
@@ -93,7 +96,7 @@ function createMenus() {
                 clip-rule="evenodd"
               />
             </svg>`;
-    menu.addEventListener("click", () => openModal(option.choices, menu));
+    menu.addEventListener("click", () => openModal(option.choices, menu, option.name));
 
     optionContainer.appendChild(label);
     optionContainer.appendChild(menu);
@@ -135,7 +138,7 @@ function createFilterButton() {
   return button;
 }
 
-function openModal(choices, button) {
+function openModal(choices, button, optionName) {
   const overlay = document.createElement("div");
   overlay.classList.add(
     "fixed",
@@ -145,7 +148,7 @@ function openModal(choices, button) {
     "flex",
     "justify-center",
     "items-center",
-    "z-50",
+    "z-50"
   );
 
   const modal = document.createElement("div");
@@ -156,6 +159,7 @@ function openModal(choices, button) {
     "p-6",
     "w-1/3",
     "max-w-md",
+    "relative"
   );
 
   const title = document.createElement("h2");
@@ -174,12 +178,21 @@ function openModal(choices, button) {
     checkbox.value = choice;
     checkbox.classList.add("modal-option");
 
+    // Retain checked state
+    if (selectedChoices[optionName]?.includes(choice)) {
+      checkbox.checked = true;
+    }
+
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(choice));
     listItem.appendChild(label);
     list.appendChild(listItem);
   });
 
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("flex", "gap-4", "mt-4", "justify-end");
+
+  // Apply Button
   const applyButton = document.createElement("button");
   applyButton.classList.add(
     "bg-blue-600",
@@ -187,20 +200,42 @@ function openModal(choices, button) {
     "rounded-md",
     "py-2",
     "px-4",
-    "font-semibold",
-    "mt-4",
-    "w-full",
+    "font-semibold"
   );
   applyButton.textContent = "Apply";
   applyButton.addEventListener("click", () => {
     const selectedOptions = Array.from(
-      document.querySelectorAll(".modal-option:checked"),
+      document.querySelectorAll(".modal-option:checked")
     ).map((option) => option.value);
+  
+    // Store selected choices
+    selectedChoices[optionName] = selectedOptions;
+  
+    // Update the button's text
+    if (selectedOptions.length > 3) {
+      const displayedOptions = selectedOptions.slice(0, 3).join(", ");
+      button.textContent = `${displayedOptions}...`;
+    } else {
+      button.textContent = selectedOptions.length
+        ? selectedOptions.join(", ")
+        : `Select ${optionName}`;
+    }
+  
+    document.body.removeChild(overlay);
+  });
 
-    button.textContent = selectedOptions.length
-      ? selectedOptions.join(", ")
-      : "Choose";
-
+  // Cancel Button
+  const cancelButton = document.createElement("button");
+  cancelButton.classList.add(
+    "bg-gray-300",
+    "text-black",
+    "rounded-md",
+    "py-2",
+    "px-4",
+    "font-semibold"
+  );
+  cancelButton.textContent = "Cancel";
+  cancelButton.addEventListener("click", () => {
     document.body.removeChild(overlay);
   });
 
@@ -210,7 +245,7 @@ function openModal(choices, button) {
     "top-2",
     "right-2",
     "text-gray-500",
-    "hover:text-black",
+    "hover:text-black"
   );
   closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -219,10 +254,13 @@ function openModal(choices, button) {
     document.body.removeChild(overlay);
   });
 
+  buttonContainer.appendChild(applyButton);
+  buttonContainer.appendChild(cancelButton);
+
   modal.appendChild(closeButton);
   modal.appendChild(title);
   modal.appendChild(list);
-  modal.appendChild(applyButton);
+  modal.appendChild(buttonContainer);
 
   overlay.appendChild(modal);
 
