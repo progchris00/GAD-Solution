@@ -1,4 +1,4 @@
-import logoImg from "../../assets/images/logo.png";
+import logoImg from "../assets/images/logo.png";
 
 export function loadHeader() {
   const headerContainer = document.getElementById("header");
@@ -81,7 +81,7 @@ function createMenus() {
       "p-1",
       "flex",
       "items-center",
-      "gap-2",
+      "gap-2"
     );
     menu.textContent = `Select ${option.name}`;
     menu.innerHTML += `<svg
@@ -96,7 +96,9 @@ function createMenus() {
                 clip-rule="evenodd"
               />
             </svg>`;
-    menu.addEventListener("click", () => openModal(option.choices, menu, option.name));
+    menu.addEventListener("click", () =>
+      openModal(option.choices, menu, option.name)
+    );
 
     optionContainer.appendChild(label);
     optionContainer.appendChild(menu);
@@ -118,7 +120,7 @@ function createFilterButton() {
     "flex",
     "items-center",
     "gap-2",
-    "self-end",
+    "self-end"
   );
 
   button.innerHTML = `<svg
@@ -207,10 +209,10 @@ function openModal(choices, button, optionName) {
     const selectedOptions = Array.from(
       document.querySelectorAll(".modal-option:checked")
     ).map((option) => option.value);
-  
+
     // Store selected choices
     selectedChoices[optionName] = selectedOptions;
-  
+
     // Update the button's text
     if (selectedOptions.length > 3) {
       const displayedOptions = selectedOptions.slice(0, 3).join(", ");
@@ -220,7 +222,7 @@ function openModal(choices, button, optionName) {
         ? selectedOptions.join(", ")
         : `Select ${optionName}`;
     }
-  
+
     document.body.removeChild(overlay);
   });
 
