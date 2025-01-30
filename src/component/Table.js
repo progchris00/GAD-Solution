@@ -176,7 +176,8 @@ const tableSection = (() => {
     });
 
     thead.appendChild(trElement);
-    container.appendChild(thead);
+    table.appendChild(thead);
+    container.appendChild(table);
   }
 
   createThead();
