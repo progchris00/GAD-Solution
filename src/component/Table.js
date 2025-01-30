@@ -2,7 +2,7 @@ export function loadTable() {
   const main = document.getElementById("main");
   main.innerHTML = "";
 
-  main.append(createTableSection());
+  main.append(createTableSection(), tableSection);
 }
 
 function createTableSection() {
@@ -135,3 +135,50 @@ function createButtons() {
   container.append(exportButton, addButton);
   return container;
 }
+
+const tableSection = (() => {
+  const container = document.createElement("div");
+  container.classList.add(
+    "mt-4",
+    "rounded-lg",
+    "border-2",
+    "border-slate-500",
+    "overflow-hidden"
+  );
+
+  const table = document.createElement("table");
+  table.classList.add("w-full", "text-center");
+
+  function createThead() {
+    const headerTexts = [
+      "Last Name",
+      "Middle Name",
+      "First Name",
+      "Suffix",
+      "Gender",
+      "Birthdate",
+      "Sector",
+      "Age",
+      "Highest Educational Attainment",
+      "Work",
+    ];
+
+    const thead = document.createElement("thead");
+    thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
+    const trElement = document.createElement("tr");
+
+    headerTexts.forEach((text) => {
+      const thElement = document.createElement("th");
+      thElement.classList.add("p-2", "font-semibold");
+      thElement.setAttribute("scope", "col");
+      thElement.textContent = text;
+      trElement.appendChild(thElement);
+    });
+
+    thead.appendChild(trElement);
+    container.appendChild(thead);
+  }
+
+  createThead();
+  return container;
+})();
