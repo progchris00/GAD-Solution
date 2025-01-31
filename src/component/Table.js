@@ -177,9 +177,40 @@ const tableSection = (() => {
 
     thead.appendChild(trElement);
     table.appendChild(thead);
-    container.appendChild(table);
+  }
+
+  function createTBody() {
+    const data = {
+      surname: "Ortiz",
+      middlename: "Pamulaklakin",
+      name: "Christian",
+      suffix: "",
+      sex: "Male",
+      birthday: "03/05/2005",
+      age: "19",
+      sector: "None",
+      highestEducationalAttainment: "Bachelor's Degree",
+      work: "Web Developer",
+    };
+
+    const tbody = document.createElement("tbody");
+
+    const trElement = document.createElement("tr");
+
+    Object.values(data).forEach((value) => {
+      const tdElement = document.createElement("td");
+      tdElement.classList.add("p-2");
+      tdElement.textContent = value;
+      trElement.appendChild(tdElement);
+    });
+
+    tbody.appendChild(trElement);
+    table.appendChild(tbody);
   }
 
   createThead();
+  createTBody();
+
+  container.appendChild(table);
   return container;
 })();
