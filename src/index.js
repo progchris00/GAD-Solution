@@ -1,5 +1,5 @@
 import { loadGraphSection } from "./component/Graph.js";
-import { loadTable } from "./component/Table/Table.js";
+import { loadTable } from "./component/Table.js";
 import { loadHeader } from "./component/Header.js";
 
 const loadPage = (function () {
