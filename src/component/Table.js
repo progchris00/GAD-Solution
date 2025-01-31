@@ -2,14 +2,14 @@ export function loadTable() {
   const main = document.getElementById("main");
   main.innerHTML = "";
 
-  main.append(createTableSection(), tableSection);
+  main.append(createTableSection());
 }
 
 function createTableSection() {
   const container = document.createElement("div");
   container.classList.add("p-4");
 
-  container.append(createHeadingSection());
+  container.append(createHeadingSection(), tableSection);
   return container;
 }
 
