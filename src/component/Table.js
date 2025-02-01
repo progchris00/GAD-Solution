@@ -137,9 +137,11 @@ function createButtons() {
 }
 
 const tableSection = (() => {
+  const sectionContainer = document.createElement("div");
+  sectionContainer.classList.add("mt-4");
+
   const container = document.createElement("div");
   container.classList.add(
-    "mt-4",
     "rounded-lg",
     "border-2",
     "border-slate-500",
@@ -180,6 +182,19 @@ const tableSection = (() => {
     table.appendChild(thead);
   }
 
+  function createTableFooter() {
+    const container = document.createElement("div");
+    container.classList.add("flex", "justify-between", "mt-2");
+
+    const dataSummary = document.createElement("p");
+    dataSummary.textContent = `Showing 10 out of 19,000 residents`;
+    dataSummary.classList.add("italic", "font-semibold", "text-sm");
+
+    container.append(dataSummary, createNavButtons());
+
+    sectionContainer.appendChild(container);
+  }
+
   async function createTBody() {
     const data = await getData();
 
@@ -217,6 +232,10 @@ const tableSection = (() => {
     }
   }
 
+  async function getDataCount() {
+    return await getData().length;
+  }
+
   function isNull(information) {
     return information === "";
   }
@@ -226,9 +245,32 @@ const tableSection = (() => {
     tdElement.classList.add("text-gray-400", "italic", "cursor-not-allowed");
   }
 
+  function createNavButtons() {
+    const container = document.createElement("div");
+
+    for (let index = 0; index < 3; index++) {
+      const button = document.createElement("button");
+
+      if (index == 0) {
+        button.classList.add("py-1", "px-3", "text-white", "bg-slate-700");
+      } else {
+        button.classList.add("py-1", "px-3");
+      }
+
+      button.textContent = index;
+      button.id = index;
+      container.append(button);
+    }
+
+    return container;
+  }
+
+  sectionContainer.appendChild(container);
+
   createThead();
   createTBody();
+  createTableFooter();
 
   container.appendChild(table);
-  return container;
+  return sectionContainer;
 })();
