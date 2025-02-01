@@ -150,24 +150,25 @@ const tableSection = (() => {
   table.classList.add("w-full", "text-center");
 
   function createThead() {
-    const headerTexts = [
+    const defaultHeading = [
       "Last Name",
-      "Middle Name",
       "First Name",
       "Suffix",
-      "Gender",
-      "Birthdate",
-      "Sector",
       "Age",
-      "Highest Educational Attainment",
-      "Work",
+      "Sex",
+      "Sector",
+      "Civil Status",
+      "Education Level",
+      "Occupation",
+      "Relihiyon",
+      "Voter Status",
     ];
 
     const thead = document.createElement("thead");
     thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
     const trElement = document.createElement("tr");
 
-    headerTexts.forEach((text) => {
+    defaultHeading.forEach((text) => {
       const thElement = document.createElement("th");
       thElement.classList.add("p-2", "font-semibold");
       thElement.setAttribute("scope", "col");
