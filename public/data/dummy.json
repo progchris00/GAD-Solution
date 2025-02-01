@@ -1,0 +1,67 @@
+[
+  {
+    "lastName": "Doe",
+    "firstName": "John",
+    "suffix": "",
+    "age": "35",
+    "sex": "Male",
+    "sector": "None",
+    "civilStatus": "Single",
+    "educationLevel": "Bachelor's Degree",
+    "occupation": "Web Developer",
+    "religion": "Christianity",
+    "voterStatus": "Registered"
+  },
+  {
+    "lastName": "Smith",
+    "firstName": "Jane",
+    "suffix": "",
+    "age": "28",
+    "sex": "Female",
+    "sector": "PWD",
+    "civilStatus": "Married",
+    "educationLevel": "Master's Degree",
+    "occupation": "Data Analyst",
+    "religion": "Atheist",
+    "voterStatus": "Registered"
+  },
+  {
+    "lastName": "Garcia",
+    "firstName": "Carlos",
+    "suffix": "Jr.",
+    "age": "42",
+    "sex": "Male",
+    "sector": "Senior Citizen",
+    "civilStatus": "Widowed",
+    "educationLevel": "High School Diploma",
+    "occupation": "Retired",
+    "religion": "Catholic",
+    "voterStatus": "Not Registered"
+  },
+  {
+    "lastName": "Lee",
+    "firstName": "Emily",
+    "suffix": "",
+    "age": "31",
+    "sex": "Female",
+    "sector": "Single Parent",
+    "civilStatus": "Single",
+    "educationLevel": "Bachelor's Degree",
+    "occupation": "Teacher",
+    "religion": "Buddhism",
+    "voterStatus": "Registered"
+  },
+  {
+    "lastName": "Martinez",
+    "firstName": "David",
+    "suffix": "Sr.",
+    "age": "50",
+    "sex": "Male",
+    "sector": "None",
+    "civilStatus": "Married",
+    "educationLevel": "Doctorate",
+    "occupation": "Professor",
+    "religion": "Christianity",
+    "voterStatus": "Registered"
+  }
+]

@@ -180,33 +180,35 @@ const tableSection = (() => {
     table.appendChild(thead);
   }
 
-  function createTBody() {
-    const data = {
-      surname: "Ortiz",
-      middlename: "Pamulaklakin",
-      name: "Christian",
-      suffix: "",
-      sex: "Male",
-      birthday: "03/05/2005",
-      age: "19",
-      sector: "None",
-      highestEducationalAttainment: "Bachelor's Degree",
-      work: "Web Developer",
-    };
+  async function createTBody() {
+    const data = await getData();
 
     const tbody = document.createElement("tbody");
 
-    const trElement = document.createElement("tr");
+    Object.values(data).forEach((person) => {
+      const trElement = document.createElement("tr");
 
-    Object.values(data).forEach((value) => {
-      const tdElement = document.createElement("td");
-      tdElement.classList.add("p-2");
-      tdElement.textContent = value;
-      trElement.appendChild(tdElement);
+      Object.values(person).forEach((information) => {
+        const tdElement = document.createElement("td");
+        tdElement.classList.add("p-2");
+        tdElement.textContent = information;
+        trElement.appendChild(tdElement);
+      });
+      tbody.appendChild(trElement);
     });
 
-    tbody.appendChild(trElement);
     table.appendChild(tbody);
+  }
+
+  async function getData() {
+    try {
+      const response = await fetch("/data/dummy.json");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
   }
 
   createThead();
