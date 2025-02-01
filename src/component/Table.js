@@ -191,7 +191,13 @@ const tableSection = (() => {
       Object.values(person).forEach((information) => {
         const tdElement = document.createElement("td");
         tdElement.classList.add("p-2");
-        tdElement.textContent = information;
+
+        if (isNull(information)) {
+          createNullIndicator(tdElement);
+        } else {
+          tdElement.textContent = information;
+        }
+
         trElement.appendChild(tdElement);
       });
       tbody.appendChild(trElement);
@@ -209,6 +215,15 @@ const tableSection = (() => {
       console.error("Error fetching data:", error);
       return [];
     }
+  }
+
+  function isNull(information) {
+    return information === "";
+  }
+
+  function createNullIndicator(tdElement) {
+    tdElement.textContent = "n/a";
+    tdElement.classList.add("text-gray-400", "italic", "cursor-not-allowed");
   }
 
   createThead();
