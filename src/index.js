@@ -1,7 +1,7 @@
-import { loadGraphSection } from "./component/Graph.js";
-import { loadTable } from "./component/Table.js";
-import { loadHeader } from "./component/Header.js";
-import { loadSidebar } from "./component/Sidebar.js";
+import { loadGraphSection } from "./component/graph.js";
+import { loadTable } from "./component/table.js";
+import { loadHeader } from "./component/header.js";
+import { loadSidebar } from "./component/sidebar.js";
 
 const loadPage = (function () {
   loadTable();
