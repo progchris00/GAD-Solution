@@ -35,9 +35,6 @@ function createMenuSection() {
   return container;
 }
 
-// Variable to store selected choices
-const selectedChoices = {};
-
 function createMenus() {
   const options = [
     {
@@ -106,6 +103,73 @@ function createMenus() {
   });
 
   return container;
+}
+
+function createFilterMenu(name, choices) {
+  const selectedChoices = {};
+
+  const label = document.createElement("label");
+  label.textContent = name;
+  label.classList.add("font-semibold");
+
+  const menu = document.createElement("button");
+  menu.classList.add(
+    "border",
+    "border-gray-300",
+    "rounded-md",
+    "p-1",
+    "flex",
+    "items-center",
+    "gap-2"
+  );
+  menu.textContent = `Select ${name}`;
+  menu.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+  <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
+
+  menu.addEventListener("click", () => openMenu());
+
+  function openMenu() {
+    const overlay = document.createElement("div");
+    overlay.classList.add(
+      "fixed",
+      "inset-0",
+      "bg-black",
+      "bg-opacity-50",
+      "flex",
+      "justify-center",
+      "items-center",
+      "z-50"
+    );
+
+    const modal = document.createElement("div");
+    modal.classList.add(
+      "bg-white",
+      "rounded-md",
+      "shadow-lg",
+      "p-6",
+      "w-1/3",
+      "max-w-md",
+      "relative"
+    );
+
+    const title = document.createElement("h2");
+    title.classList.add("text-xl", "font-bold", "mb-4");
+    title.textContent = "Select Options";
+
+    const list = document.createElement("ul");
+    list.classList.add("space-y-2");
+
+    choices.forEach((choice) => {
+      const listItem = document.createElement("li");
+      const label = document.createElement("label");
+      label.classList.add("flex", "items-center", "gap-2");
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = choice;
+      checkbox.classList.add("modal-option");
+    });
+  }
 }
 
 function createFilterButton() {
