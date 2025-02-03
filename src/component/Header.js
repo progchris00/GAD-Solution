@@ -28,7 +28,39 @@ function createMenuSection() {
   const container = document.createElement("div");
   container.classList.add("flex", "gap-12");
 
-  container.appendChild(createMenus());
+  const purokFilter = createFilterMenu("Purok", ["1", "2", "3", "4", "5", "6"]);
+  const ageRangeFilter = createFilterMenu("Age range", [
+    "17 below",
+    "18-27",
+    "28-39",
+    "40-49",
+    "50-63",
+    "64 above",
+  ]);
+  const sectorFilter = createFilterMenu("Sector", [
+    "PWD",
+    "Senior",
+    "Solo Parent",
+    "Iba Pa",
+  ]);
+  const voterStatusFilter = createFilterMenu("Voter status", [
+    "Registered, Non-registered",
+  ]);
+  const civilStatusFilter = createFilterMenu("Civil status", [
+    "Single",
+    "Married",
+    "Separated",
+    "Widowed",
+    "Divorced",
+  ]);
+
+  container.append(
+    purokFilter.container,
+    ageRangeFilter.container,
+    sectorFilter.container,
+    voterStatusFilter.container,
+    civilStatusFilter.container
+  );
 
   container.appendChild(createFilterButton());
 
@@ -108,6 +140,9 @@ function createMenus() {
 function createFilterMenu(name, choices) {
   const selectedChoices = {};
 
+  const container = document.createElement("div");
+  container.classList.add("flex", "flex-col");
+
   const label = document.createElement("label");
   label.textContent = name;
   label.classList.add("font-semibold");
@@ -127,6 +162,8 @@ function createFilterMenu(name, choices) {
   <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
 
   menu.addEventListener("click", () => openMenu());
+
+  container.append(label, menu);
 
   function openMenu() {
     const overlay = document.createElement("div");
@@ -170,6 +207,10 @@ function createFilterMenu(name, choices) {
       checkbox.classList.add("modal-option");
     });
   }
+
+  return {
+    container,
+  };
 }
 
 function createFilterButton() {
