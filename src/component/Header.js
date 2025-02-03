@@ -194,10 +194,25 @@ function openModal(choices, button, optionName) {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("flex", "gap-4", "mt-4", "justify-end");
 
+  // Cancel Button
+  const cancelButton = document.createElement("button");
+  cancelButton.classList.add(
+    "bg-slate-300",
+    "text-black",
+    "rounded-md",
+    "py-2",
+    "px-4",
+    "font-semibold"
+  );
+  cancelButton.textContent = "Cancel";
+  cancelButton.addEventListener("click", () => {
+    document.body.removeChild(overlay);
+  });
+
   // Apply Button
   const applyButton = document.createElement("button");
   applyButton.classList.add(
-    "bg-blue-600",
+    "bg-slate-700",
     "text-white",
     "rounded-md",
     "py-2",
@@ -226,21 +241,6 @@ function openModal(choices, button, optionName) {
     document.body.removeChild(overlay);
   });
 
-  // Cancel Button
-  const cancelButton = document.createElement("button");
-  cancelButton.classList.add(
-    "bg-gray-300",
-    "text-black",
-    "rounded-md",
-    "py-2",
-    "px-4",
-    "font-semibold"
-  );
-  cancelButton.textContent = "Cancel";
-  cancelButton.addEventListener("click", () => {
-    document.body.removeChild(overlay);
-  });
-
   const closeButton = document.createElement("button");
   closeButton.classList.add(
     "absolute",
@@ -256,8 +256,8 @@ function openModal(choices, button, optionName) {
     document.body.removeChild(overlay);
   });
 
-  buttonContainer.appendChild(applyButton);
   buttonContainer.appendChild(cancelButton);
+  buttonContainer.appendChild(applyButton);
 
   modal.appendChild(closeButton);
   modal.appendChild(title);
