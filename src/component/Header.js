@@ -68,7 +68,7 @@ function createMenuSection() {
 }
 
 function createFilterMenu(name, choices) {
-  const selectedChoices = {};
+  const selectedChoices = new Set();
 
   const container = document.createElement("div");
   container.classList.add("flex", "flex-col");
@@ -134,8 +134,85 @@ function createFilterMenu(name, choices) {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = choice;
-      checkbox.classList.add("modal-option");
+
+      if (selectedChoices.has(choice)) {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          selectedChoices.add(choice);
+        } else {
+          selectedChoices.delete(choice);
+        }
+      });
+
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(choice));
+      listItem.appendChild(label);
+      list.appendChild(listItem);
     });
+
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("flex", "gap-4", "mt-4", "justify-end");
+
+    // Cancel Button
+    const cancelButton = document.createElement("button");
+    cancelButton.classList.add(
+      "bg-slate-300",
+      "text-black",
+      "rounded-md",
+      "py-2",
+      "px-4",
+      "font-semibold"
+    );
+    cancelButton.textContent = "Cancel";
+    cancelButton.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+    });
+
+    // Apply Button
+    const applyButton = document.createElement("button");
+    applyButton.classList.add(
+      "bg-slate-700",
+      "text-white",
+      "rounded-md",
+      "py-2",
+      "px-4",
+      "font-semibold"
+    );
+    applyButton.textContent = "Apply";
+    applyButton.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+      console.log(selectedChoices);
+    });
+
+    const closeButton = document.createElement("button");
+    closeButton.classList.add(
+      "absolute",
+      "top-2",
+      "right-2",
+      "text-gray-500",
+      "hover:text-black"
+    );
+    closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>`;
+    closeButton.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+    });
+
+    buttonContainer.appendChild(cancelButton);
+    buttonContainer.appendChild(applyButton);
+
+    modal.appendChild(closeButton);
+    modal.appendChild(title);
+    modal.appendChild(list);
+    modal.appendChild(buttonContainer);
+
+    overlay.appendChild(modal);
+
+    document.body.appendChild(overlay);
   }
 
   return {
