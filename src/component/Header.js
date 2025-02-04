@@ -70,34 +70,32 @@ function createFilterMenuSection() {
 function createFilterMenu(name, choices) {
   const selectedChoices = new Set();
 
-  function createLabelMenu() {
-    const container = document.createElement("div");
-    container.classList.add("flex", "flex-col");
+  const container = document.createElement("div");
+  container.classList.add("flex", "flex-col");
 
-    const label = document.createElement("label");
-    label.textContent = name;
-    label.classList.add("font-semibold");
+  const label = document.createElement("label");
+  label.textContent = name;
+  label.classList.add("font-semibold");
 
-    const menu = document.createElement("button");
-    menu.classList.add(
-      "border",
-      "border-gray-300",
-      "rounded-md",
-      "p-1",
-      "flex",
-      "items-center",
-      "gap-2"
-    );
-    menu.textContent = `Select ${name}`;
-    menu.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+  const menu = document.createElement("button");
+  menu.classList.add(
+    "border",
+    "border-gray-300",
+    "rounded-md",
+    "p-1",
+    "flex",
+    "items-center",
+    "gap-2"
+  );
+  menu.textContent = `Select ${name}`;
+  menu.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
   <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
 
-    menu.addEventListener("click", () => openMenu());
+  menu.addEventListener("click", () => openModal());
 
-    container.append(label, menu);
-  }
+  container.append(label, menu);
 
-  function openMenu() {
+  function openModal() {
     const overlay = document.createElement("div");
     overlay.classList.add(
       "fixed",
