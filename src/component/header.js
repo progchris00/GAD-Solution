@@ -55,11 +55,11 @@ function createFilterMenuSection() {
   ]);
 
   filterMenuContainer.append(
-    purok.menu,
-    ageRange.menu,
-    sector.menu,
-    voterStatus.menu,
-    civilStatus.menu,
+    purok.container,
+    ageRange.container,
+    sector.container,
+    voterStatus.container,
+    civilStatus.container,
 
     createFilterButton()
   );
@@ -221,7 +221,7 @@ function createFilterMenu(name, choices) {
   }
 
   return {
-    menu,
+    container,
   };
 }
 
