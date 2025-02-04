@@ -3,7 +3,7 @@ import logoImg from "../assets/images/logo.png";
 export function loadHeader() {
   const headerContainer = document.getElementById("header");
   headerContainer.appendChild(createHeadingSection());
-  headerContainer.appendChild(createMenuSection());
+  headerContainer.appendChild(createFilterMenuSection());
 }
 
 function createHeadingSection() {
@@ -24,12 +24,12 @@ function createHeadingSection() {
   return container;
 }
 
-function createMenuSection() {
-  const container = document.createElement("div");
-  container.classList.add("flex", "gap-12");
+function createFilterMenuSection() {
+  const filterMenuContainer = document.createElement("div");
+  filterMenuContainer.classList.add("flex", "gap-12");
 
-  const purokFilter = createFilterMenu("Purok", ["1", "2", "3", "4", "5", "6"]);
-  const ageRangeFilter = createFilterMenu("Age range", [
+  const purok = createFilterMenu("Purok", ["1", "2", "3", "4", "5", "6"]);
+  const ageRange = createFilterMenu("Age range", [
     "17 below",
     "18-27",
     "28-39",
@@ -37,16 +37,16 @@ function createMenuSection() {
     "50-63",
     "64 above",
   ]);
-  const sectorFilter = createFilterMenu("Sector", [
+  const sector = createFilterMenu("Sector", [
     "PWD",
     "Senior",
     "Solo Parent",
     "Iba Pa",
   ]);
-  const voterStatusFilter = createFilterMenu("Voter status", [
+  const voterStatus = createFilterMenu("Voter status", [
     "Registered, Non-registered",
   ]);
-  const civilStatusFilter = createFilterMenu("Civil status", [
+  const civilStatus = createFilterMenu("Civil status", [
     "Single",
     "Married",
     "Separated",
@@ -54,46 +54,48 @@ function createMenuSection() {
     "Divorced",
   ]);
 
-  container.append(
-    purokFilter.container,
-    ageRangeFilter.container,
-    sectorFilter.container,
-    voterStatusFilter.container,
-    civilStatusFilter.container
+  filterMenuContainer.append(
+    purok.menu,
+    ageRange.menu,
+    sector.menu,
+    voterStatus.menu,
+    civilStatus.menu,
+
+    createFilterButton()
   );
 
-  container.appendChild(createFilterButton());
-
-  return container;
+  return filterMenuContainer;
 }
 
 function createFilterMenu(name, choices) {
   const selectedChoices = new Set();
 
-  const container = document.createElement("div");
-  container.classList.add("flex", "flex-col");
+  function createLabelMenu() {
+    const container = document.createElement("div");
+    container.classList.add("flex", "flex-col");
 
-  const label = document.createElement("label");
-  label.textContent = name;
-  label.classList.add("font-semibold");
+    const label = document.createElement("label");
+    label.textContent = name;
+    label.classList.add("font-semibold");
 
-  const menu = document.createElement("button");
-  menu.classList.add(
-    "border",
-    "border-gray-300",
-    "rounded-md",
-    "p-1",
-    "flex",
-    "items-center",
-    "gap-2"
-  );
-  menu.textContent = `Select ${name}`;
-  menu.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+    const menu = document.createElement("button");
+    menu.classList.add(
+      "border",
+      "border-gray-300",
+      "rounded-md",
+      "p-1",
+      "flex",
+      "items-center",
+      "gap-2"
+    );
+    menu.textContent = `Select ${name}`;
+    menu.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
   <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
 
-  menu.addEventListener("click", () => openMenu());
+    menu.addEventListener("click", () => openMenu());
 
-  container.append(label, menu);
+    container.append(label, menu);
+  }
 
   function openMenu() {
     const overlay = document.createElement("div");
@@ -156,67 +158,72 @@ function createFilterMenu(name, choices) {
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("flex", "gap-4", "mt-4", "justify-end");
 
-    // Cancel Button
-    const cancelButton = document.createElement("button");
-    cancelButton.classList.add(
-      "bg-slate-300",
-      "text-black",
-      "rounded-md",
-      "py-2",
-      "px-4",
-      "font-semibold"
-    );
-    cancelButton.textContent = "Cancel";
-    cancelButton.addEventListener("click", () => {
-      document.body.removeChild(overlay);
-    });
+    buttonContainer.append(createCancelButton(), createApplyButton());
 
-    // Apply Button
-    const applyButton = document.createElement("button");
-    applyButton.classList.add(
-      "bg-slate-700",
-      "text-white",
-      "rounded-md",
-      "py-2",
-      "px-4",
-      "font-semibold"
-    );
-    applyButton.textContent = "Apply";
-    applyButton.addEventListener("click", () => {
-      document.body.removeChild(overlay);
-      console.log(selectedChoices);
-    });
-
-    const closeButton = document.createElement("button");
-    closeButton.classList.add(
-      "absolute",
-      "top-2",
-      "right-2",
-      "text-gray-500",
-      "hover:text-black"
-    );
-    closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-  </svg>`;
-    closeButton.addEventListener("click", () => {
-      document.body.removeChild(overlay);
-    });
-
-    buttonContainer.appendChild(cancelButton);
-    buttonContainer.appendChild(applyButton);
-
-    modal.appendChild(closeButton);
-    modal.appendChild(title);
-    modal.appendChild(list);
-    modal.appendChild(buttonContainer);
+    modal.append(createCloseButton(), title, list, buttonContainer);
 
     overlay.appendChild(modal);
 
     document.body.appendChild(overlay);
+
+    function createCancelButton() {
+      const cancelButton = document.createElement("button");
+      cancelButton.classList.add(
+        "bg-slate-300",
+        "text-black",
+        "rounded-md",
+        "py-2",
+        "px-4",
+        "font-semibold"
+      );
+      cancelButton.textContent = "Cancel";
+      cancelButton.addEventListener("click", () => {
+        document.body.removeChild(overlay);
+      });
+
+      return cancelButton;
+    }
+
+    function createApplyButton() {
+      const applyButton = document.createElement("button");
+      applyButton.classList.add(
+        "bg-slate-700",
+        "text-white",
+        "rounded-md",
+        "py-2",
+        "px-4",
+        "font-semibold"
+      );
+      applyButton.textContent = "Apply";
+      applyButton.addEventListener("click", () => {
+        document.body.removeChild(overlay);
+      });
+
+      return applyButton;
+    }
+
+    function createCloseButton() {
+      const closeButton = document.createElement("button");
+      closeButton.classList.add(
+        "absolute",
+        "top-2",
+        "right-2",
+        "text-gray-500",
+        "hover:text-black"
+      );
+      closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>`;
+      closeButton.addEventListener("click", () => {
+        document.body.removeChild(overlay);
+      });
+
+      return closeButton;
+    }
   }
 
   return {
-    container,
+    menu,
   };
 }
 
