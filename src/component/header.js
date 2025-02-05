@@ -44,7 +44,8 @@ function createFilterMenuSection() {
     "Iba Pa",
   ]);
   const voterStatus = createFilterMenu("Voter status", [
-    "Registered, Non-registered",
+    "Registered",
+    "Non-registered",
   ]);
   const civilStatus = createFilterMenu("Civil status", [
     "Single",
