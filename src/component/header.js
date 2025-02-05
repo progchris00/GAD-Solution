@@ -196,20 +196,7 @@ function createFilterMenu(name, choices) {
       );
       applyButton.textContent = "Apply";
       applyButton.addEventListener("click", () => {
-        if (selectedChoices.size > 0) {
-          menu.innerHTML = `${Array.from(selectedChoices).join(", ")} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
-          if (selectedChoices.size > 3) {
-            const firstSelectedChoices = Array.from(selectedChoices)
-              .slice(0, 3)
-              .join(", ");
-            menu.innerHTML = `${firstSelectedChoices}... <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
-          }
-        } else {
-          menu.innerHTML = menuLabel;
-        }
-        document.body.removeChild(overlay);
+        updateMenuLabel();
       });
 
       return applyButton;
@@ -232,6 +219,23 @@ function createFilterMenu(name, choices) {
       });
 
       return closeButton;
+    }
+
+    function updateMenuLabel() {
+      if (selectedChoices.size > 0) {
+        menu.innerHTML = `${Array.from(selectedChoices).join(", ")} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
+        if (selectedChoices.size > 3) {
+          const firstSelectedChoices = Array.from(selectedChoices)
+            .slice(0, 3)
+            .join(", ");
+          menu.innerHTML = `${firstSelectedChoices}... <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>`;
+        }
+      } else {
+        menu.innerHTML = menuLabel;
+      }
+      document.body.removeChild(overlay);
     }
   }
 
