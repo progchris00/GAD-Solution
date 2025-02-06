@@ -57,12 +57,12 @@ function createFilterMenuSection() {
   ]);
 
   filterMenuContainer.append(
+    gender.container,
     purok.container,
     ageRange.container,
     sector.container,
     voterStatus.container,
     civilStatus.container,
-    gender.container,
 
     createFilterButton()
   );
