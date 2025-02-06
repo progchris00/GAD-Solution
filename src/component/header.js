@@ -28,6 +28,7 @@ function createFilterMenuSection() {
   const filterMenuContainer = document.createElement("div");
   filterMenuContainer.classList.add("flex", "gap-12");
 
+  const gender = createFilterMenu("Gender", ["Male", "Female"]);
   const purok = createFilterMenu("Purok", ["1", "2", "3", "4", "5", "6"]);
   const ageRange = createFilterMenu("Age range", [
     "17 below",
@@ -61,6 +62,7 @@ function createFilterMenuSection() {
     sector.container,
     voterStatus.container,
     civilStatus.container,
+    gender.container,
 
     createFilterButton()
   );
