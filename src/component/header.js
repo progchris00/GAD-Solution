@@ -6,6 +6,10 @@ export function loadHeader() {
   headerContainer.appendChild(createFilterMenuSection());
 }
 
+export function getSelectedChoices() {
+  // Make a function to export it to the table file
+}
+
 function createHeadingSection() {
   const container = document.createElement("div");
   container.classList.add("flex", "items-center", "gap-2");
@@ -241,6 +245,10 @@ function createFilterMenu(name, choices) {
     }
   }
 
+  function getSelectedChoices() {
+    return selectedChoices;
+  }
+
   return {
     container,
   };
@@ -274,6 +282,10 @@ function createFilterButton() {
               />
             </svg>`;
   button.innerHTML += "Apply filters";
+
+  button.addEventListener("click", () => {
+    // get all the selected choices, pass to the table
+  });
 
   return button;
 }
