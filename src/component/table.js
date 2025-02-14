@@ -196,7 +196,7 @@ const tableSection = (() => {
   }
 
   async function createTBody() {
-    const data = await getData();
+    const { data } = await getData();
 
     const tbody = document.createElement("tbody");
 
@@ -225,15 +225,11 @@ const tableSection = (() => {
     try {
       const response = await fetch("/data/dummy.json");
       const data = await response.json();
-      return data;
+      return { data, length: data.length };
     } catch (error) {
       console.error("Error fetching data:", error);
       return [];
     }
-  }
-
-  async function getDataCount() {
-    return await getData().length;
   }
 
   function isNull(information) {
