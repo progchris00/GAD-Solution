@@ -223,7 +223,7 @@ const tableSection = (() => {
 
   async function getData() {
     try {
-      const response = await fetch("/data/dummy.json");
+      const response = await fetch("/api/v1/residents");
       const data = await response.json();
       return { data, length: data.length };
     } catch (error) {
