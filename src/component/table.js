@@ -200,21 +200,24 @@ const tableSection = (() => {
 
     const tbody = document.createElement("tbody");
 
+    console.log(data[0])
+
     Object.values(data).forEach((person) => {
+
       const trElement = document.createElement("tr");
-
-      Object.values(person).forEach((information) => {
-        const tdElement = document.createElement("td");
-        tdElement.classList.add("p-2");
-
-        if (isNull(information)) {
-          createNullIndicator(tdElement);
-        } else {
-          tdElement.textContent = information;
-        }
-
-        trElement.appendChild(tdElement);
-      });
+      trElement.innerHTML = `
+        <td class="p-2"> ${person.lastName} </td>
+        <td class="p-2"> ${person.firstName} </td>
+        ${isNull(person.suffix) ? person.suffix : createNullIndicator()}
+        <td class="p-2"> ${person.age} </td>
+        <td class="p-2"> ${person.sex} </td>
+        <td class="p-2"> ${person.sector} </td>
+        <td class="p-2"> ${person.civilStatus} </td>
+        <td class="p-2"> ${person.educationalLevel.name} </td>
+        <td class="p-2"> ${person.occupation.name} </td>
+        <td class="p-2"> ${person.religion.name} </td>
+        <td class="p-2"> ${person.voterStatus} </td>
+      `;
       tbody.appendChild(trElement);
     });
 
@@ -235,12 +238,11 @@ const tableSection = (() => {
   }
 
   function isNull(information) {
-    return information === "";
+    return information === null;
   }
 
-  function createNullIndicator(tdElement) {
-    tdElement.textContent = "n/a";
-    tdElement.classList.add("text-gray-400", "italic", "cursor-not-allowed");
+  function createNullIndicator() {
+    return `<td class="text-gray-400 italic cursor-not-allowed">n/a</td>`;
   }
 
   function createNavButtons() {
