@@ -172,12 +172,14 @@ const tableSection = (() => {
 
   async function getTableHeading() {
     try {
-      const response = await fetch("http://localhost:9191/api/v1/table-heading/all");
+      const response = await fetch(
+        "http://localhost:9191/api/v1/table-heading/all"
+      );
       const apiReponse = await response.json();
 
-      return { tableHeading: apiReponse.data }
+      return { tableHeading: apiReponse.data };
     } catch (error) {
-      return { tableHeading: [] }
+      return { tableHeading: [] };
     }
   }
 
@@ -199,10 +201,9 @@ const tableSection = (() => {
 
     const tbody = document.createElement("tbody");
 
-    console.log(data[0])
+    console.log(data[0]);
 
     Object.values(data).forEach((person) => {
-
       const trElement = document.createElement("tr");
       trElement.innerHTML = `
         <td class="p-2"> ${person.lastName} </td>
@@ -225,14 +226,16 @@ const tableSection = (() => {
 
   async function getData() {
     try {
-      const response = await fetch("http://localhost:9191/api/v1/residents/all");
+      const response = await fetch(
+        "http://localhost:9191/api/v1/residents/all"
+      );
 
       const apiResponse = await response.json();
 
       return { data: apiResponse.data, length: apiResponse.data.length };
     } catch (error) {
       console.error("Error fetching data:", error);
-      return { data: [], length: 0 } ;
+      return { data: [], length: 0 };
     }
   }
 
