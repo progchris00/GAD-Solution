@@ -223,12 +223,14 @@ const tableSection = (() => {
 
   async function getData() {
     try {
-      const response = await fetch("/api/v1/residents");
-      const data = await response.json();
-      return { data, length: data.length };
+      const response = await fetch("http://localhost:9191/api/v1/residents/all");
+
+      const apiResponse = await response.json();
+
+      return { data: apiResponse.data, length: apiResponse.data.length };
     } catch (error) {
       console.error("Error fetching data:", error);
-      return [];
+      return { data: [], length: 0 } ;
     }
   }
 
