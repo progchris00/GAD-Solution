@@ -151,35 +151,34 @@ const tableSection = (() => {
   const table = document.createElement("table");
   table.classList.add("w-full", "text-center");
 
-  function createThead() {
-    const defaultHeading = [
-      "Last Name",
-      "First Name",
-      "Suffix",
-      "Age",
-      "Sex",
-      "Sector",
-      "Civil Status",
-      "Education Level",
-      "Occupation",
-      "Relihiyon",
-      "Voter Status",
-    ];
+  async function createThead() {
+    const { tableHeading } = await getTableHeading();
 
     const thead = document.createElement("thead");
     thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
     const trElement = document.createElement("tr");
 
-    defaultHeading.forEach((text) => {
+    tableHeading.forEach((heading) => {
       const thElement = document.createElement("th");
       thElement.classList.add("p-2", "font-semibold");
       thElement.setAttribute("scope", "col");
-      thElement.textContent = text;
+      thElement.textContent = heading.name;
       trElement.appendChild(thElement);
     });
 
     thead.appendChild(trElement);
     table.appendChild(thead);
+  }
+
+  async function getTableHeading() {
+    try {
+      const response = await fetch("http://localhost:9191/api/v1/table-heading/all");
+      const apiReponse = await response.json();
+
+      return { tableHeading: apiReponse.data }
+    } catch (error) {
+      return { tableHeading: [] }
+    }
   }
 
   function createTableFooter() {
