@@ -107,6 +107,7 @@ function createButtons() {
   exportButton.innerHTML += "Export";
 
   const addButton = document.createElement("button");
+  addButton.id = "view-add-btn"; 
   addButton.classList.add(
     "bg-slate-700",
     "py-2",
@@ -132,9 +133,12 @@ function createButtons() {
         </svg>`;
   addButton.innerHTML += "Add";
 
+
   container.append(exportButton, addButton);
   return container;
 }
+
+
 
 const tableSection = (() => {
   const sectionContainer = document.createElement("div");
