@@ -79,8 +79,8 @@ function createButtons() {
   const container = document.createElement("div");
   container.classList.add("flex", "gap-2", "font-semibold");
 
-  const exportButton = document.createElement("button");
-  exportButton.classList.add(
+  const exportImportButton = document.createElement("button");
+  exportImportButton.classList.add(
     "bg-slate-300",
     "py-2",
     "px-4",
@@ -89,7 +89,7 @@ function createButtons() {
     "gap-2",
     "rounded-md"
   );
-  exportButton.innerHTML = `<svg
+  exportImportButton.innerHTML = `<svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -104,7 +104,7 @@ function createButtons() {
             d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z"
           />
         </svg>`;
-  exportButton.innerHTML += "Export";
+  exportImportButton.innerHTML += "Export / Import";
 
   const addButton = document.createElement("button");
   addButton.classList.add(
@@ -132,7 +132,7 @@ function createButtons() {
         </svg>`;
   addButton.innerHTML += "Add";
 
-  container.append(exportButton, addButton);
+  container.append(exportImportButton, addButton);
   return container;
 }
 
