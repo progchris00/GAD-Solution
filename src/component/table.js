@@ -129,20 +129,26 @@ function createButtons() {
 async function openEditColumnModal() {
   const { tableHeading } = await getTableHeading();
   document.body.innerHTML += `
-    <dialog id="edit-column-modal" class="p-6 w-1/3 shadow-lg">
-      <h1>Edit columns</h1>
+    <dialog id="edit-column-modal" class="p-6 w-1/3 shadow-lg rounded-md">
+      <h2 class="text-xl font-bold mb-4">Edit columns</h1>
       <div>
+        <ul class="space-y-2">
           ${tableHeading
             .map(
               (heading) => `
-            <input type="checkbox" id="${heading}" name="columns" value="${heading}" checked><label for="${heading}"> ${heading.name} </label><br>
+              <li>
+                <label for="${heading.name}" class="flex items-center gap-2">
+                  <input type="checkbox" id="${heading.name}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
+                </label>
+              </li>
             `
             )
             .join("")}
+          </ul>
       </div>
-      <div>
-        <button>Cancel</button>
-        <button>Apply</button>
+      <div class="flex gap-4 mt-4 justify-end">
+        <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold">Cancel</button>
+        <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold">Apply</button>
       </div>
     </dialog>`;
   document.getElementById("edit-column-modal").showModal();
