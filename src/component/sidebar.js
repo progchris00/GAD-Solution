@@ -17,7 +17,13 @@ function createSidebar() {
   titleContainer.appendChild(title);
 
   const buttonsContainer = document.createElement("div");
-  buttonsContainer.classList.add("flex", "justify-center", "items-center", "gap-4", "text-md");
+  buttonsContainer.classList.add(
+    "flex",
+    "justify-center",
+    "items-center",
+    "gap-4",
+    "text-md"
+  );
 
   const clearFilterButton = document.createElement("button");
   clearFilterButton.id = "clearFilter";
@@ -26,7 +32,13 @@ function createSidebar() {
   clearFilterButton.appendChild(clearFilterText);
 
   const dotSeparator = document.createElement("div");
-  dotSeparator.classList.add("flex", "w-2", "h-2", "rounded-full", "bg-gray-200");
+  dotSeparator.classList.add(
+    "flex",
+    "w-2",
+    "h-2",
+    "rounded-full",
+    "bg-gray-200"
+  );
 
   const saveFilterButton = document.createElement("button");
   saveFilterButton.id = "saveFilter";
@@ -49,50 +61,82 @@ const selectedChoices = {};
 
 function createMenuSection() {
   const container = document.createElement("div");
-  container.classList.add("flex", "flex-col", "overflow-y-auto", "max-h-screen");
+  container.classList.add(
+    "flex",
+    "flex-col",
+    "overflow-y-auto",
+    "max-h-screen"
+  );
 
-  container.appendChild(createSection("lupa", "Impormasyon Tungkol sa Lupa", [
-      { 
-        name: "Pag-aari ng Lupa", 
-        choices: ["De Titulo", "OHA/CELA", "Rights", "Naninirahan (Tenant)", "Lupa ng Gobyerno", "Wala"] 
+  container.appendChild(
+    createSection("lupa", "Impormasyon Tungkol sa Lupa", [
+      {
+        name: "Pag-aari ng Lupa",
+        choices: [
+          "De Titulo",
+          "OHA/CELA",
+          "Rights",
+          "Naninirahan (Tenant)",
+          "Lupa ng Gobyerno",
+          "Wala",
+        ],
       },
-      { name: "Uri ng Paninirahan", 
-        choices: ["May-ari", "Nakikitira", "Nangungupahan"] 
+      {
+        name: "Uri ng Paninirahan",
+        choices: ["May-ari", "Nakikitira", "Nangungupahan"],
       },
-      { name: "Uri ng Bahay", 
-        choices: ["Kongkreto", "Gawa sa Kahoy", "Kongkreto at Kahoy"] 
+      {
+        name: "Uri ng Bahay",
+        choices: ["Kongkreto", "Gawa sa Kahoy", "Kongkreto at Kahoy"],
       },
-      { name: "Bilang ng Palapag ng Bahay", 
-        choices: ["Isang Palapag", "Dalawang Palapag", "Tatlong Palapag", "Higit pa sa Tatlong Palapag"] 
+      {
+        name: "Bilang ng Palapag ng Bahay",
+        choices: [
+          "Isang Palapag",
+          "Dalawang Palapag",
+          "Tatlong Palapag",
+          "Higit pa sa Tatlong Palapag",
+        ],
       },
-      { name: "Pinagkukuhanan ng Enerhiya", 
-        choices: ["MERALCO", "Solar Panel", "De Baterya", "Gumagamit ng Kerosene"] 
+      {
+        name: "Pinagkukuhanan ng Enerhiya",
+        choices: [
+          "MERALCO",
+          "Solar Panel",
+          "De Baterya",
+          "Gumagamit ng Kerosene",
+        ],
       },
-  ]));
+    ])
+  );
 
-  container.appendChild(createSection("tubig", "Impormasyon Tungkol sa Tubig System", [
-      { name: "Inuming Tubig", 
-        choices: ["De Gripo", "Mineral Water", "Poso"] 
+  container.appendChild(
+    createSection("tubig", "Impormasyon Tungkol sa Tubig System", [
+      { name: "Inuming Tubig", choices: ["De Gripo", "Mineral Water", "Poso"] },
+      { name: "Uri ng Palikuran", choices: ["De Buhos", "De Flush", "Wala"] },
+      {
+        name: "Lugar ng Palikuran",
+        choices: [
+          "Nasa Loob ng Bahay",
+          "Nasa Labas ng Bahay",
+          "Pansarili",
+          "May nakikigamit",
+          "Wala",
+        ],
       },
-      { name: "Uri ng Palikuran", 
-        choices: ["De Buhos", "De Flush", "Wala"] 
-      },
-      { name: "Lugar ng Palikuran", 
-        choices: ["Nasa Loob ng Bahay", "Nasa Labas ng Bahay", "Pansarili", "May nakikigamit", "Wala"] 
-      },
-      { name: "Poso Negro", 
-        choices: ["Meron", "Wala"] 
-      },
-  ]));
+      { name: "Poso Negro", choices: ["Meron", "Wala"] },
+    ])
+  );
 
-  container.appendChild(createSection("impormasyon", "Ibang Impormasyon", [
-      { name: "Uri ng Alagang Hayop", 
-        choices: ["Aso", "Pusa", "Manok"] 
+  container.appendChild(
+    createSection("impormasyon", "Ibang Impormasyon", [
+      { name: "Uri ng Alagang Hayop", choices: ["Aso", "Pusa", "Manok"] },
+      {
+        name: "Uri ng Transportasyon na Pag-Aari Ninyo",
+        choices: ["Motorcycle", "Car", "Tricycle", "Jeep", "Pick up/SUV"],
       },
-      { name: "Uri ng Transportasyon na Pag-Aari Ninyo", 
-        choices: ["Motorcycle", "Car", "Tricycle", "Jeep", "Pick up/SUV"] 
-      },
-  ]));
+    ])
+  );
 
   return container;
 }
@@ -102,10 +146,17 @@ function createSection(sectionId, sectionTitle, options) {
 
   const button = document.createElement("button");
   button.classList.add("w-full", "p-2");
-  button.addEventListener("click", () => toggleDropdown(`${sectionId}-content`));
+  button.addEventListener("click", () =>
+    toggleDropdown(`${sectionId}-content`)
+  );
 
   const buttonContent = document.createElement("div");
-  buttonContent.classList.add("flex", "flex-row", "items-center", "justify-between");
+  buttonContent.classList.add(
+    "flex",
+    "flex-row",
+    "items-center",
+    "justify-between"
+  );
 
   const icon = document.createElement("div");
   icon.classList.add("flex", "items-center", "justify-between", "gap-3");
@@ -146,38 +197,40 @@ function createSection(sectionId, sectionTitle, options) {
   content.classList.add("hidden", "p-4");
 
   options.forEach((option) => {
-      const optionContainer = document.createElement("div");
-      optionContainer.classList.add("flex", "flex-col", "items-start");
+    const optionContainer = document.createElement("div");
+    optionContainer.classList.add("flex", "flex-col", "items-start");
 
-      const optionButton = document.createElement("button");
-      optionButton.classList.add("flex", "flex-row", "items-center");
-      optionButton.id = `${option.name.replace(/\s+/g, '').toLowerCase()}ModalBtn`;
+    const optionButton = document.createElement("button");
+    optionButton.classList.add("flex", "flex-row", "items-center");
+    optionButton.id = `${option.name.replace(/\s+/g, "").toLowerCase()}ModalBtn`;
 
-      const optionText = document.createElement("p");
-      optionText.textContent = option.name;
+    const optionText = document.createElement("p");
+    optionText.textContent = option.name;
 
-      const optionIcon = document.createElement("img");
-      optionIcon.src = dropdownLogo; // Use the imported image
-      optionIcon.classList.add("w-6");
-      optionIcon.alt = "Dropdown Icon";
+    const optionIcon = document.createElement("img");
+    optionIcon.src = dropdownLogo; // Use the imported image
+    optionIcon.classList.add("w-6");
+    optionIcon.alt = "Dropdown Icon";
 
-      optionButton.appendChild(optionText);
-      optionButton.appendChild(optionIcon);
+    optionButton.appendChild(optionText);
+    optionButton.appendChild(optionIcon);
 
-      const selectedValues = document.createElement("div");
-      selectedValues.id = `selected${option.name.replace(/\s+/g, '')}Values`;
-      selectedValues.classList.add("hidden");
+    const selectedValues = document.createElement("div");
+    selectedValues.id = `selected${option.name.replace(/\s+/g, "")}Values`;
+    selectedValues.classList.add("hidden");
 
-      const selectedList = document.createElement("div");
-      selectedList.id = `selected${option.name.replace(/\s+/g, '')}List`;
-      selectedList.classList.add("flex", "flex-wrap");
+    const selectedList = document.createElement("div");
+    selectedList.id = `selected${option.name.replace(/\s+/g, "")}List`;
+    selectedList.classList.add("flex", "flex-wrap");
 
-      selectedValues.appendChild(selectedList);
-      optionContainer.appendChild(optionButton);
-      optionContainer.appendChild(selectedValues);
-      content.appendChild(optionContainer);
+    selectedValues.appendChild(selectedList);
+    optionContainer.appendChild(optionButton);
+    optionContainer.appendChild(selectedValues);
+    content.appendChild(optionContainer);
 
-      optionButton.addEventListener("click", () => openModal(option.choices, optionButton, option.name, selectedList));
+    optionButton.addEventListener("click", () =>
+      openModal(option.choices, optionButton, option.name, selectedList)
+    );
   });
 
   section.appendChild(content);
@@ -187,32 +240,32 @@ function createSection(sectionId, sectionTitle, options) {
 function toggleDropdown(id) {
   const content = document.getElementById(id);
   if (content) {
-      content.classList.toggle("hidden");
+    content.classList.toggle("hidden");
   }
 }
 
 function openModal(choices, button, optionName, selectedList) {
   const overlay = document.createElement("div");
   overlay.classList.add(
-      "fixed",
-      "inset-0",
-      "bg-black",
-      "bg-opacity-50",
-      "flex",
-      "justify-center",
-      "items-center",
-      "z-50"
+    "fixed",
+    "inset-0",
+    "bg-black",
+    "bg-opacity-50",
+    "flex",
+    "justify-center",
+    "items-center",
+    "z-50"
   );
 
   const modal = document.createElement("div");
   modal.classList.add(
-      "bg-white",
-      "rounded-md",
-      "shadow-lg",
-      "p-6",
-      "w-1/3",
-      "max-w-md",
-      "relative"
+    "bg-white",
+    "rounded-md",
+    "shadow-lg",
+    "p-6",
+    "w-1/3",
+    "max-w-md",
+    "relative"
   );
 
   const title = document.createElement("h2");
@@ -222,23 +275,23 @@ function openModal(choices, button, optionName, selectedList) {
   const list = document.createElement("ul");
   list.classList.add("space-y-2");
   choices.forEach((choice) => {
-      const listItem = document.createElement("li");
-      const label = document.createElement("label");
-      label.classList.add("flex", "items-center", "gap-2");
+    const listItem = document.createElement("li");
+    const label = document.createElement("label");
+    label.classList.add("flex", "items-center", "gap-2");
 
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.value = choice;
-      checkbox.classList.add("modal-option");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = choice;
+    checkbox.classList.add("modal-option");
 
-      if (selectedChoices[optionName]?.includes(choice)) {
-          checkbox.checked = true;
-      }
+    if (selectedChoices[optionName]?.includes(choice)) {
+      checkbox.checked = true;
+    }
 
-      label.appendChild(checkbox);
-      label.appendChild(document.createTextNode(choice));
-      listItem.appendChild(label);
-      list.appendChild(listItem);
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(choice));
+    listItem.appendChild(label);
+    list.appendChild(listItem);
   });
 
   const buttonContainer = document.createElement("div");
@@ -246,53 +299,53 @@ function openModal(choices, button, optionName, selectedList) {
 
   const applyButton = document.createElement("button");
   applyButton.classList.add(
-      "bg-blue-600",
-      "text-white",
-      "rounded-md",
-      "py-2",
-      "px-4",
-      "font-semibold"
+    "bg-blue-600",
+    "text-white",
+    "rounded-md",
+    "py-2",
+    "px-4",
+    "font-semibold"
   );
   applyButton.textContent = "Apply";
   applyButton.addEventListener("click", () => {
-      const selectedOptions = Array.from(
-          document.querySelectorAll(".modal-option:checked")
-      ).map((option) => option.value);
+    const selectedOptions = Array.from(
+      document.querySelectorAll(".modal-option:checked")
+    ).map((option) => option.value);
 
-      selectedChoices[optionName] = selectedOptions;
+    selectedChoices[optionName] = selectedOptions;
 
-      updateSelectedList(selectedList, selectedOptions, optionName);
+    updateSelectedList(selectedList, selectedOptions, optionName);
 
-      document.body.removeChild(overlay);
+    document.body.removeChild(overlay);
   });
 
   const cancelButton = document.createElement("button");
   cancelButton.classList.add(
-      "bg-gray-300",
-      "text-black",
-      "rounded-md",
-      "py-2",
-      "px-4",
-      "font-semibold"
+    "bg-gray-300",
+    "text-black",
+    "rounded-md",
+    "py-2",
+    "px-4",
+    "font-semibold"
   );
   cancelButton.textContent = "Cancel";
   cancelButton.addEventListener("click", () => {
-      document.body.removeChild(overlay);
+    document.body.removeChild(overlay);
   });
 
   const closeButton = document.createElement("button");
   closeButton.classList.add(
-      "absolute",
-      "top-2",
-      "right-2",
-      "text-gray-500",
-      "hover:text-black"
+    "absolute",
+    "top-2",
+    "right-2",
+    "text-gray-500",
+    "hover:text-black"
   );
   closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
   </svg>`;
   closeButton.addEventListener("click", () => {
-      document.body.removeChild(overlay);
+    document.body.removeChild(overlay);
   });
 
   buttonContainer.appendChild(applyButton);
@@ -308,47 +361,51 @@ function openModal(choices, button, optionName, selectedList) {
 }
 
 function updateSelectedList(selectedList, selectedOptions, optionName) {
-  selectedList.innerHTML = '';
+  selectedList.innerHTML = "";
 
   selectedOptions.forEach((option) => {
-      const optionDiv = document.createElement("div");
-      optionDiv.classList.add(
-          "bg-gray-200",
-          "p-2",
-          "rounded",
-          "flex",
-          "items-center",
-          "mr-2",
-          "mt-2"
+    const optionDiv = document.createElement("div");
+    optionDiv.classList.add(
+      "bg-gray-200",
+      "p-2",
+      "rounded",
+      "flex",
+      "items-center",
+      "mr-2",
+      "mt-2"
+    );
+    optionDiv.textContent = option;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "x";
+    removeBtn.classList.add("ml-2", "text-black-500", "cursor-pointer");
+    removeBtn.addEventListener("click", () => {
+      selectedChoices[optionName] = selectedChoices[optionName].filter(
+        (item) => item !== option
       );
-      optionDiv.textContent = option;
 
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "x";
-      removeBtn.classList.add("ml-2", "text-black-500", "cursor-pointer");
-      removeBtn.addEventListener("click", () => {
-          selectedChoices[optionName] = selectedChoices[optionName].filter(
-              (item) => item !== option
-          );
+      optionDiv.remove();
 
-          optionDiv.remove();
+      if (selectedChoices[optionName].length === 0) {
+        const selectedValuesContainer = document.getElementById(
+          `selected${optionName.replace(/\s+/g, "")}Values`
+        );
+        if (selectedValuesContainer) {
+          selectedValuesContainer.classList.add("hidden");
+        }
+      }
+    });
 
-          if (selectedChoices[optionName].length === 0) {
-              const selectedValuesContainer = document.getElementById(`selected${optionName.replace(/\s+/g, '')}Values`);
-              if (selectedValuesContainer) {
-                  selectedValuesContainer.classList.add("hidden");
-              }
-          }
-      });
-
-      optionDiv.appendChild(removeBtn);
-      selectedList.appendChild(optionDiv);
+    optionDiv.appendChild(removeBtn);
+    selectedList.appendChild(optionDiv);
   });
 
   if (selectedOptions.length > 0) {
-      const selectedValuesContainer = document.getElementById(`selected${optionName.replace(/\s+/g, '')}Values`);
-      if (selectedValuesContainer) {
-          selectedValuesContainer.classList.remove("hidden");
-      }
+    const selectedValuesContainer = document.getElementById(
+      `selected${optionName.replace(/\s+/g, "")}Values`
+    );
+    if (selectedValuesContainer) {
+      selectedValuesContainer.classList.remove("hidden");
+    }
   }
 }
