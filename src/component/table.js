@@ -79,8 +79,8 @@ function createButtons() {
   const container = document.createElement("div");
   container.classList.add("flex", "gap-2", "font-semibold");
 
-  const exportButton = document.createElement("button");
-  exportButton.classList.add(
+  const exportImportButton = document.createElement("button");
+  exportImportButton.classList.add(
     "bg-slate-300",
     "py-2",
     "px-4",
@@ -89,7 +89,7 @@ function createButtons() {
     "gap-2",
     "rounded-md"
   );
-  exportButton.innerHTML = `<svg
+  exportImportButton.innerHTML = `<svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -104,11 +104,11 @@ function createButtons() {
             d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z"
           />
         </svg>`;
-  exportButton.innerHTML += "Export";
+  exportImportButton.innerHTML += "Export / Import";
 
-  const addButton = document.createElement("button");
-  addButton.id = "view-add-btn"; 
-  addButton.classList.add(
+
+  const editColumnButton = document.createElement("button");
+  editColumnButton.classList.add(
     "bg-slate-700",
     "py-2",
     "px-4",
@@ -119,26 +119,54 @@ function createButtons() {
     "text-white"
   );
 
-  addButton.innerHTML = `<svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="size-4"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-            clip-rule="evenodd"
-          />
-        </svg>`;
-  addButton.innerHTML += "Add";
+  editColumnButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" /><path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" /></svg>`;
+  editColumnButton.innerHTML += "Edit columns";
+  editColumnButton.addEventListener("click", () => openEditColumnModal());
 
-
-  container.append(exportButton, addButton);
+  container.append(exportImportButton, editColumnButton);
   return container;
 }
 
+async function openEditColumnModal() {
+  const { tableHeading } = await getTableHeading();
+  document.body.innerHTML += `
+    <dialog id="edit-column-modal" class="p-6 w-1/3 shadow-lg rounded-md">
+      <h2 class="text-xl font-bold mb-4">Edit columns</h1>
+      <div>
+        <ul class="space-y-2">
+          ${tableHeading
+            .map(
+              (heading) => `
+              <li>
+                <label for="${heading.name}" class="flex items-center gap-2">
+                  <input type="checkbox" id="${heading.name}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
+                </label>
+              </li>
+            `
+            )
+            .join("")}
+          </ul>
+      </div>
+      <div class="flex gap-4 mt-4 justify-end">
+        <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold">Cancel</button>
+        <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold">Apply</button>
+      </div>
+    </dialog>`;
+  document.getElementById("edit-column-modal").showModal();
+}
 
+async function getTableHeading() {
+  try {
+    const response = await fetch(
+      "http://localhost:9191/api/v1/table-heading/all"
+    );
+    const apiReponse = await response.json();
+
+    return { tableHeading: apiReponse.data };
+  } catch (error) {
+    return { tableHeading: [] };
+  }
+}
 
 const tableSection = (() => {
   const sectionContainer = document.createElement("div");
@@ -155,30 +183,18 @@ const tableSection = (() => {
   const table = document.createElement("table");
   table.classList.add("w-full", "text-center");
 
-  function createThead() {
-    const defaultHeading = [
-      "Last Name",
-      "First Name",
-      "Suffix",
-      "Age",
-      "Sex",
-      "Sector",
-      "Civil Status",
-      "Education Level",
-      "Occupation",
-      "Relihiyon",
-      "Voter Status",
-    ];
+  async function createThead() {
+    const { tableHeading } = await getTableHeading();
 
     const thead = document.createElement("thead");
     thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
     const trElement = document.createElement("tr");
 
-    defaultHeading.forEach((text) => {
+    tableHeading.forEach((heading) => {
       const thElement = document.createElement("th");
       thElement.classList.add("p-2", "font-semibold");
       thElement.setAttribute("scope", "col");
-      thElement.textContent = text;
+      thElement.textContent = heading.name;
       trElement.appendChild(thElement);
     });
 
@@ -206,19 +222,19 @@ const tableSection = (() => {
 
     Object.values(data).forEach((person) => {
       const trElement = document.createElement("tr");
-
-      Object.values(person).forEach((information) => {
-        const tdElement = document.createElement("td");
-        tdElement.classList.add("p-2");
-
-        if (isNull(information)) {
-          createNullIndicator(tdElement);
-        } else {
-          tdElement.textContent = information;
-        }
-
-        trElement.appendChild(tdElement);
-      });
+      trElement.innerHTML = `
+        <td class="p-2"> ${person.lastName} </td>
+        <td class="p-2"> ${person.firstName} </td>
+        ${isNull(person.suffix) ? person.suffix : createNullIndicator()}
+        <td class="p-2"> ${person.age} </td>
+        <td class="p-2"> ${person.sex} </td>
+        <td class="p-2"> ${person.sector} </td>
+        <td class="p-2"> ${person.civilStatus} </td>
+        <td class="p-2"> ${person.educationalLevel.name} </td>
+        <td class="p-2"> ${person.occupation.name} </td>
+        <td class="p-2"> ${person.religion.name} </td>
+        <td class="p-2"> ${person.voterStatus} </td>
+      `;
       tbody.appendChild(trElement);
     });
 
@@ -227,22 +243,25 @@ const tableSection = (() => {
 
   async function getData() {
     try {
-      const response = await fetch("/api/v1/residents");
-      const data = await response.json();
-      return { data, length: data.length };
+      const response = await fetch(
+        "http://localhost:9191/api/v1/residents/all"
+      );
+
+      const apiResponse = await response.json();
+
+      return { data: apiResponse.data, length: apiResponse.data.length };
     } catch (error) {
       console.error("Error fetching data:", error);
-      return [];
+      return { data: [], length: 0 };
     }
   }
 
   function isNull(information) {
-    return information === "";
+    return information === null;
   }
 
-  function createNullIndicator(tdElement) {
-    tdElement.textContent = "n/a";
-    tdElement.classList.add("text-gray-400", "italic", "cursor-not-allowed");
+  function createNullIndicator() {
+    return `<td class="text-gray-400 italic cursor-not-allowed">n/a</td>`;
   }
 
   function createNavButtons() {
