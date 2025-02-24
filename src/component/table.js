@@ -154,6 +154,12 @@ async function openEditColumnModal() {
   document.getElementById("edit-column-modal").showModal();
 }
 
+document.addEventListener("click", (event) => {
+  if (event.target.id === "cancel-btn") {
+    document.getElementById("edit-column-modal").close();
+  }
+});
+
 async function getTableHeading() {
   try {
     const response = await fetch(
