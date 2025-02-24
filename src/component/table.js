@@ -106,7 +106,6 @@ function createButtons() {
         </svg>`;
   exportImportButton.innerHTML += "Export / Import";
 
-
   const editColumnButton = document.createElement("button");
   editColumnButton.classList.add(
     "bg-slate-700",
@@ -148,8 +147,8 @@ async function openEditColumnModal() {
           </ul>
       </div>
       <div class="flex gap-4 mt-4 justify-end">
-        <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold">Cancel</button>
-        <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold">Apply</button>
+        <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold" id="cancel-btn">Cancel</button>
+        <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold" id="apply-btn">Apply</button>
       </div>
     </dialog>`;
   document.getElementById("edit-column-modal").showModal();
