@@ -137,8 +137,8 @@ async function openEditColumnModal() {
             .map(
               (heading) => `
               <li>
-                <label for="${heading.name}" class="flex items-center gap-2">
-                  <input type="checkbox" data-id="${heading.id} id="${heading.id}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
+                <label for="${heading.id}" class="flex items-center gap-2">
+                  <input type="checkbox" data-id="${heading.id}" id="${heading.id}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
                 </label>
               </li>
             `
