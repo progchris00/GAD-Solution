@@ -289,6 +289,33 @@ const tableSection = (() => {
     return container;
   }
 
+  document.addEventListener("click", (event) => {
+    if (event.target.id === "apply-btn") {
+      const checkboxes = document.querySelectorAll('input[name="columns"]');
+      const checkboxStates = [];
+
+      checkboxes.forEach((checkbox) => {
+        checkboxStates.push({
+          id: checkbox.getAttribute("data-id"),
+          state: checkbox.checked ? "ACTIVE" : "INACTIVE",
+        });
+      });
+
+      fetch("http://localhost:9191/api/v1/table-heading/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(checkboxStates),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Success:", data))
+        .catch((error) => console.error("Error:", error));
+      document.getElementById("edit-column-modal").close();
+      createThead();
+    }
+  });
+
   sectionContainer.appendChild(container);
 
   createThead();
