@@ -3,13 +3,14 @@ export function loadTable() {
   main.innerHTML = "";
 
   main.append(createTableSection());
+  createMainTable();
 }
 
 function createTableSection() {
   const container = document.createElement("div");
   container.classList.add("p-4");
 
-  container.append(createHeadingSection(), tableSection);
+  container.append(createHeadingSection());
   return container;
 }
 
@@ -166,6 +167,7 @@ async function getTableHeading() {
       "http://localhost:9191/api/v1/table-heading/all"
     );
     const apiReponse = await response.json();
+    console.log(apiReponse.data);
 
     return { tableHeading: apiReponse.data };
   } catch (error) {
@@ -173,57 +175,57 @@ async function getTableHeading() {
   }
 }
 
-const tableSection = (() => {
-  const sectionContainer = document.createElement("div");
-  sectionContainer.classList.add("mt-4");
+function createMainTable() {
+  function createTableStructure() {
+    const sectionContainer = document.createElement("div");
+    sectionContainer.classList.add("mt-4");
 
-  const container = document.createElement("div");
-  container.classList.add(
-    "rounded-lg",
-    "border-2",
-    "border-slate-500",
-    "overflow-hidden"
-  );
+    const container = document.createElement("div");
+    container.classList.add(
+      "rounded-lg",
+      "border-2",
+      "border-slate-500",
+      "overflow-hidden"
+    );
 
-  const table = document.createElement("table");
-  table.classList.add("w-full", "text-center");
-
-  async function createThead() {
-    const { tableHeading } = await getTableHeading();
+    const table = document.createElement("table");
+    table.classList.add("w-full", "text-center");
 
     const thead = document.createElement("thead");
     thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
+
+    const tbody = document.createElement("tbody");
+
+    table.append(thead, tbody);
+    container.append(table);
+    sectionContainer.append(container);
+
+    document.querySelector("main").append(sectionContainer);
+  }
+
+  async function createThead() {
+    const theadElement = document.querySelector("thead");
+    theadElement.innerHTML = "";
+
+    const { tableHeading } = await getTableHeading();
+
     const trElement = document.createElement("tr");
 
     tableHeading.forEach((heading) => {
-      const thElement = document.createElement("th");
-      thElement.classList.add("p-2", "font-semibold");
-      thElement.setAttribute("scope", "col");
-      thElement.textContent = heading.name;
-      trElement.appendChild(thElement);
+      if (heading.state === "ACTIVE") {
+        const thElement = document.createElement("th");
+        thElement.classList.add("p-2", "font-semibold");
+        thElement.setAttribute("scope", "col");
+        thElement.textContent = heading.name;
+        trElement.appendChild(thElement);
+      }
     });
 
-    thead.appendChild(trElement);
-    table.appendChild(thead);
-  }
-
-  function createTableFooter() {
-    const container = document.createElement("div");
-    container.classList.add("flex", "justify-between", "mt-2");
-
-    const dataSummary = document.createElement("p");
-    dataSummary.textContent = `Showing 10 out of 19,000 residents`;
-    dataSummary.classList.add("italic", "font-semibold", "text-sm");
-
-    container.append(dataSummary, createNavButtons());
-
-    sectionContainer.appendChild(container);
+    theadElement.appendChild(trElement);
   }
 
   async function createTBody() {
     const { data } = await getData();
-
-    const tbody = document.createElement("tbody");
 
     Object.values(data).forEach((person) => {
       const trElement = document.createElement("tr");
@@ -244,6 +246,39 @@ const tableSection = (() => {
     });
 
     table.appendChild(tbody);
+  }
+
+  function createTableFooter() {
+    const container = document.createElement("div");
+    container.classList.add("flex", "justify-between", "mt-2");
+
+    const dataSummary = document.createElement("p");
+    dataSummary.textContent = `Showing 10 out of 19,000 residents`;
+    dataSummary.classList.add("italic", "font-semibold", "text-sm");
+
+    container.append(dataSummary, createNavButtons());
+
+    sectionContainer.appendChild(container);
+  }
+
+  function createNavButtons() {
+    const container = document.createElement("div");
+
+    for (let index = 0; index < 3; index++) {
+      const button = document.createElement("button");
+
+      if (index == 0) {
+        button.classList.add("py-1", "px-3", "text-white", "bg-slate-700");
+      } else {
+        button.classList.add("py-1", "px-3");
+      }
+
+      button.textContent = index;
+      button.id = index;
+      container.append(button);
+    }
+
+    return container;
   }
 
   async function getData() {
@@ -269,26 +304,6 @@ const tableSection = (() => {
     return `<td class="text-gray-400 italic cursor-not-allowed">n/a</td>`;
   }
 
-  function createNavButtons() {
-    const container = document.createElement("div");
-
-    for (let index = 0; index < 3; index++) {
-      const button = document.createElement("button");
-
-      if (index == 0) {
-        button.classList.add("py-1", "px-3", "text-white", "bg-slate-700");
-      } else {
-        button.classList.add("py-1", "px-3");
-      }
-
-      button.textContent = index;
-      button.id = index;
-      container.append(button);
-    }
-
-    return container;
-  }
-
   document.addEventListener("click", (event) => {
     if (event.target.id === "apply-btn") {
       const checkboxes = document.querySelectorAll('input[name="columns"]');
@@ -312,16 +327,12 @@ const tableSection = (() => {
         .then((data) => console.log("Success:", data))
         .catch((error) => console.error("Error:", error));
       document.getElementById("edit-column-modal").close();
-      createThead();
     }
   });
 
-  sectionContainer.appendChild(container);
+  // createTBody();
+  // createTableFooter();
 
+  createTableStructure();
   createThead();
-  createTBody();
-  createTableFooter();
-
-  container.appendChild(table);
-  return sectionContainer;
-})();
+}
