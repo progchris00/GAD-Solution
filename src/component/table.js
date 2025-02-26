@@ -304,7 +304,7 @@ function createMainTable() {
     return `<td class="text-gray-400 italic cursor-not-allowed">n/a</td>`;
   }
 
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", async (event) => {
     if (event.target.id === "apply-btn") {
       const checkboxes = document.querySelectorAll('input[name="columns"]');
       const checkboxStates = [];
@@ -316,17 +316,30 @@ function createMainTable() {
         });
       });
 
-      fetch("http://localhost:9191/api/v1/table-heading/update", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(checkboxStates),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("Success:", data))
-        .catch((error) => console.error("Error:", error));
+      try {
+        const response = await fetch(
+          "http://localhost:9191/api/v1/table-heading/update",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(checkboxStates),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Success:", data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
       document.getElementById("edit-column-modal").close();
+      await createThead();
     }
   });
 
