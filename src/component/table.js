@@ -167,8 +167,6 @@ async function getTableHeading() {
       "http://localhost:9191/api/v1/table-heading/all"
     );
     const apiReponse = await response.json();
-    console.log(apiReponse.data);
-
     return { tableHeading: apiReponse.data };
   } catch (error) {
     return { tableHeading: [] };
