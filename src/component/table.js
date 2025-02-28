@@ -9,6 +9,7 @@ export function loadTable() {
 function createTableSection() {
   const container = document.createElement("div");
   container.classList.add("p-4");
+  container.id = "table-section";
 
   container.append(createHeadingSection());
   return container;
@@ -207,7 +208,7 @@ function createMainTable() {
     container.append(table);
     sectionContainer.append(container);
 
-    document.querySelector("main").append(sectionContainer);
+    document.getElementById("table-section").append(sectionContainer);
   }
 
   async function createThead() {
