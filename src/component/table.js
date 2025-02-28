@@ -233,6 +233,7 @@ function createMainTable() {
   }
 
   async function createTBody() {
+    const tBody = document.querySelector("tbody");
     const { data } = await getData();
 
     Object.values(data).forEach((person) => {
@@ -250,10 +251,8 @@ function createMainTable() {
         <td class="p-2"> ${person.religion.name} </td>
         <td class="p-2"> ${person.voterStatus} </td>
       `;
-      tbody.appendChild(trElement);
+      tBody.appendChild(trElement);
     });
-
-    table.appendChild(tbody);
   }
 
   function createTableFooter() {
@@ -351,9 +350,9 @@ function createMainTable() {
     }
   });
 
-  // createTBody();
   // createTableFooter();
 
   createTableStructure();
   createThead();
+  createTBody();
 }
