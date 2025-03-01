@@ -189,12 +189,8 @@ function createMainTable() {
     sectionContainer.classList.add("mt-4");
 
     const container = document.createElement("div");
-    container.classList.add(
-      "rounded-lg",
-      "border-2",
-      "border-slate-500",
-      "overflow-hidden"
-    );
+    container.className =
+      "rounded-lg border-2 border-slate-500 overflow-hidden";
 
     const table = document.createElement("table");
     table.classList.add("w-full", "text-center");
