@@ -106,6 +106,32 @@ function createButtons() {
         </svg>`;
   exportImportButton.innerHTML += "Export / Import";
 
+  const addButton = document.createElement("button");
+  addButton.id = "view-add-btn";
+  addButton.classList.add(
+    "bg-slate-700",
+    "py-2",
+    "px-4",
+    "flex",
+    "items-center",
+    "gap-2",
+    "rounded-md",
+    "text-white"
+  );
+
+  addButton.innerHTML = `<svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="size-4"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+            clip-rule="evenodd"
+          />
+        </svg>`;
+  addButton.innerHTML += "Add";
 
   const editColumnButton = document.createElement("button");
   editColumnButton.classList.add(
@@ -123,7 +149,7 @@ function createButtons() {
   editColumnButton.innerHTML += "Edit columns";
   editColumnButton.addEventListener("click", () => openEditColumnModal());
 
-  container.append(exportImportButton, editColumnButton);
+  container.append(exportImportButton, editColumnButton, addButton);
   return container;
 }
 
