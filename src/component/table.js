@@ -222,7 +222,7 @@ function createMainTable() {
     tableHeading.forEach((heading) => {
       if (heading.state === "ACTIVE") {
         const thElement = document.createElement("th");
-        thElement.classList.add("p-2", "font-semibold");
+        thElement.className = "p-2 font-semibold";
         thElement.setAttribute("scope", "col");
         thElement.textContent = heading.name;
         trElement.appendChild(thElement);
