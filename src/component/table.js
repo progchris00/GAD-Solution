@@ -230,24 +230,30 @@ function createMainTable() {
 
   async function createTBody() {
     const tBody = document.querySelector("tbody");
+    tBody.innerHTML = "";
+
+    const { tableHeading } = await getTableHeading();
+    const activeTableHeading = tableHeading
+      .filter((heading) => heading.state === "ACTIVE")
+      .map((heading) => heading.headingReference);
+
     const { data } = await getData();
 
-    Object.values(data).forEach((person) => {
+    data.forEach((person) => {
       const trElement = document.createElement("tr");
-      trElement.innerHTML = `
-        <td class="p-2"> ${person.lastName} </td>
-        <td class="p-2"> ${person.firstName} </td>
-        ${isNull(person.suffix) ? person.suffix : createNullIndicator()}
-        <td class="p-2"> ${person.age} </td>
-        <td class="p-2"> ${person.sex} </td>
-        <td class="p-2"> ${person.sector} </td>
-        <td class="p-2"> ${person.civilStatus} </td>
-        <td class="p-2"> ${person.educationalLevel.name} </td>
-        <td class="p-2"> ${person.occupation.name} </td>
-        <td class="p-2"> ${person.religion.name} </td>
-        <td class="p-2"> ${person.voterStatus} </td>
-      `;
-      tBody.appendChild(trElement);
+
+      activeTableHeading.forEach((key) => {
+        const tdElement = document.createElement("td");
+        if (key in person) {
+          if (typeof person[key] === "object") {
+            tdElement.textContent = person[key].name ? person[key].name : "n/a";
+          } else {
+            tdElement.textContent = person[key] ? person[key] : "n/a";
+          }
+          trElement.append(tdElement);
+        }
+      });
+      tBody.append(trElement);
     });
   }
 
@@ -343,6 +349,7 @@ function createMainTable() {
 
       document.getElementById("edit-column-modal").close();
       await createThead();
+      await createTBody();
     }
   });
 
