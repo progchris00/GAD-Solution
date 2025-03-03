@@ -1,8 +1,10 @@
+// main.js
+
 import { loadGraphSection } from "./component/graph.js";
 import { loadTable } from "./component/table.js";
 import { loadHeader } from "./component/header.js";
 import { loadSidebar } from "./component/sidebar.js";
-import { loadModal } from "./component/form.js";
+import { loadForm } from "./component/forms/formloader.js";
 
 const loadPage = (function () {
   loadTable();
@@ -19,7 +21,7 @@ function attachListener() {
   document.getElementById("view-graph-btn").addEventListener("click", () => {
     loadGraphSection();
   });
-  // document.getElementById("view-add-btn").addEventListener("click", () => {
-  //   loadModal();
-  // });
+  document.getElementById("view-add-btn").addEventListener("click", () => {
+    loadForm();
+  });
 }
