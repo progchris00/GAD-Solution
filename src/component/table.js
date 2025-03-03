@@ -3,13 +3,15 @@ export function loadTable() {
   main.innerHTML = "";
 
   main.append(createTableSection());
+  createMainTable();
 }
 
 function createTableSection() {
   const container = document.createElement("div");
   container.classList.add("p-4");
+  container.id = "table-section";
 
-  container.append(createHeadingSection(), tableSection);
+  container.append(createHeadingSection());
   return container;
 }
 
@@ -106,33 +108,6 @@ function createButtons() {
         </svg>`;
   exportImportButton.innerHTML += "Export / Import";
 
-  const addButton = document.createElement("button");
-  addButton.id = "view-add-btn";
-  addButton.classList.add(
-    "bg-slate-700",
-    "py-2",
-    "px-4",
-    "flex",
-    "items-center",
-    "gap-2",
-    "rounded-md",
-    "text-white"
-  );
-
-  addButton.innerHTML = `<svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="size-4"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-            clip-rule="evenodd"
-          />
-        </svg>`;
-  addButton.innerHTML += "Add";
-
   const editColumnButton = document.createElement("button");
   editColumnButton.classList.add(
     "bg-slate-700",
@@ -148,38 +123,53 @@ function createButtons() {
   editColumnButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" /><path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" /></svg>`;
   editColumnButton.innerHTML += "Edit columns";
   editColumnButton.addEventListener("click", () => openEditColumnModal());
+  createEditColumnModal();
 
   container.append(exportImportButton, editColumnButton, addButton);
   return container;
 }
 
-async function openEditColumnModal() {
+async function createEditColumnModal() {
   const { tableHeading } = await getTableHeading();
-  document.body.innerHTML += `
-    <dialog id="edit-column-modal" class="p-6 w-1/3 shadow-lg rounded-md">
-      <h2 class="text-xl font-bold mb-4">Edit columns</h1>
-      <div>
-        <ul class="space-y-2">
-          ${tableHeading
-            .map(
-              (heading) => `
-              <li>
-                <label for="${heading.name}" class="flex items-center gap-2">
-                  <input type="checkbox" id="${heading.name}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
-                </label>
-              </li>
-            `
-            )
-            .join("")}
-          </ul>
-      </div>
-      <div class="flex gap-4 mt-4 justify-end">
-        <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold">Cancel</button>
-        <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold">Apply</button>
-      </div>
-    </dialog>`;
+  const modal = document.createElement("dialog");
+  modal.id = "edit-column-modal";
+  modal.className = "p-6 w-1/3 shadow-lg rounded-md";
+
+  modal.innerHTML = `
+    <h2 class="text-xl font-bold mb-4">Edit columns</h2>
+    <div>
+      <ul class="space-y-2">
+        ${tableHeading
+          .map(
+            (heading) => `
+            <li>
+              <label for="${heading.id}" class="flex items-center gap-2">
+                <input type="checkbox" data-id="${heading.id}" id="${heading.id}" name="columns" value="${heading.name}" ${heading.state === "ACTIVE" ? "checked" : ""}> ${heading.name} 
+              </label>
+            </li>
+          `
+          )
+          .join("")}
+      </ul>
+    </div>
+    <div class="flex gap-4 mt-4 justify-end">
+      <button class="bg-slate-300 text-black rounded-md py-2 px-4 font-semibold" id="cancel-btn">Cancel</button>
+      <button class="bg-slate-700 text-white rounded-md py-2 px-4 font-semibold" id="apply-btn">Apply</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function openEditColumnModal() {
   document.getElementById("edit-column-modal").showModal();
 }
+
+document.addEventListener("click", (event) => {
+  if (event.target.id === "cancel-btn") {
+    document.getElementById("edit-column-modal").close();
+  }
+});
 
 async function getTableHeading() {
   try {
@@ -187,45 +177,84 @@ async function getTableHeading() {
       "http://localhost:9191/api/v1/table-heading/all"
     );
     const apiReponse = await response.json();
-
     return { tableHeading: apiReponse.data };
   } catch (error) {
     return { tableHeading: [] };
   }
 }
 
-const tableSection = (() => {
-  const sectionContainer = document.createElement("div");
-  sectionContainer.classList.add("mt-4");
+function createMainTable() {
+  function createTableStructure() {
+    const sectionContainer = document.createElement("div");
+    sectionContainer.classList.add("mt-4");
 
-  const container = document.createElement("div");
-  container.classList.add(
-    "rounded-lg",
-    "border-2",
-    "border-slate-500",
-    "overflow-hidden"
-  );
+    const container = document.createElement("div");
+    container.className =
+      "rounded-lg border-2 border-slate-500 overflow-hidden";
 
-  const table = document.createElement("table");
-  table.classList.add("w-full", "text-center");
-
-  async function createThead() {
-    const { tableHeading } = await getTableHeading();
+    const table = document.createElement("table");
+    table.classList.add("w-full", "text-center");
 
     const thead = document.createElement("thead");
     thead.classList.add("bg-slate-300", "border-b-2", "border-slate-500");
+
+    const tbody = document.createElement("tbody");
+
+    table.append(thead, tbody);
+    container.append(table);
+    sectionContainer.append(container);
+
+    document.getElementById("table-section").append(sectionContainer);
+  }
+
+  async function createThead() {
+    const theadElement = document.querySelector("thead");
+    theadElement.innerHTML = "";
+
+    const { tableHeading } = await getTableHeading();
+
     const trElement = document.createElement("tr");
 
     tableHeading.forEach((heading) => {
-      const thElement = document.createElement("th");
-      thElement.classList.add("p-2", "font-semibold");
-      thElement.setAttribute("scope", "col");
-      thElement.textContent = heading.name;
-      trElement.appendChild(thElement);
+      if (heading.state === "ACTIVE") {
+        const thElement = document.createElement("th");
+        thElement.className = "p-2 font-semibold";
+        thElement.setAttribute("scope", "col");
+        thElement.textContent = heading.name;
+        trElement.appendChild(thElement);
+      }
     });
 
-    thead.appendChild(trElement);
-    table.appendChild(thead);
+    theadElement.appendChild(trElement);
+  }
+
+  async function createTBody() {
+    const tBody = document.querySelector("tbody");
+    tBody.innerHTML = "";
+
+    const { tableHeading } = await getTableHeading();
+    const activeTableHeading = tableHeading
+      .filter((heading) => heading.state === "ACTIVE")
+      .map((heading) => heading.headingReference);
+
+    const { data } = await getData();
+
+    data.forEach((person) => {
+      const trElement = document.createElement("tr");
+
+      activeTableHeading.forEach((key) => {
+        const tdElement = document.createElement("td");
+        if (key in person) {
+          if (typeof person[key] === "object") {
+            tdElement.textContent = person[key].name ? person[key].name : "n/a";
+          } else {
+            tdElement.textContent = person[key] ? person[key] : "n/a";
+          }
+          trElement.append(tdElement);
+        }
+      });
+      tBody.append(trElement);
+    });
   }
 
   function createTableFooter() {
@@ -241,30 +270,24 @@ const tableSection = (() => {
     sectionContainer.appendChild(container);
   }
 
-  async function createTBody() {
-    const { data } = await getData();
+  function createNavButtons() {
+    const container = document.createElement("div");
 
-    const tbody = document.createElement("tbody");
+    for (let index = 0; index < 3; index++) {
+      const button = document.createElement("button");
 
-    Object.values(data).forEach((person) => {
-      const trElement = document.createElement("tr");
-      trElement.innerHTML = `
-        <td class="p-2"> ${person.lastName} </td>
-        <td class="p-2"> ${person.firstName} </td>
-        ${isNull(person.suffix) ? person.suffix : createNullIndicator()}
-        <td class="p-2"> ${person.age} </td>
-        <td class="p-2"> ${person.sex} </td>
-        <td class="p-2"> ${person.sector} </td>
-        <td class="p-2"> ${person.civilStatus} </td>
-        <td class="p-2"> ${person.educationalLevel.name} </td>
-        <td class="p-2"> ${person.occupation.name} </td>
-        <td class="p-2"> ${person.religion.name} </td>
-        <td class="p-2"> ${person.voterStatus} </td>
-      `;
-      tbody.appendChild(trElement);
-    });
+      if (index == 0) {
+        button.classList.add("py-1", "px-3", "text-white", "bg-slate-700");
+      } else {
+        button.classList.add("py-1", "px-3");
+      }
 
-    table.appendChild(tbody);
+      button.textContent = index;
+      button.id = index;
+      container.append(button);
+    }
+
+    return container;
   }
 
   async function getData() {
@@ -290,32 +313,49 @@ const tableSection = (() => {
     return `<td class="text-gray-400 italic cursor-not-allowed">n/a</td>`;
   }
 
-  function createNavButtons() {
-    const container = document.createElement("div");
+  document.addEventListener("click", async (event) => {
+    if (event.target.id === "apply-btn") {
+      const checkboxes = document.querySelectorAll('input[name="columns"]');
+      const checkboxStates = [];
 
-    for (let index = 0; index < 3; index++) {
-      const button = document.createElement("button");
+      checkboxes.forEach((checkbox) => {
+        checkboxStates.push({
+          id: checkbox.getAttribute("data-id"),
+          state: checkbox.checked ? "ACTIVE" : "INACTIVE",
+        });
+      });
 
-      if (index == 0) {
-        button.classList.add("py-1", "px-3", "text-white", "bg-slate-700");
-      } else {
-        button.classList.add("py-1", "px-3");
+      try {
+        const response = await fetch(
+          "http://localhost:9191/api/v1/table-heading/update",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(checkboxStates),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Success:", data);
+      } catch (error) {
+        console.error("Error:", error);
       }
 
-      button.textContent = index;
-      button.id = index;
-      container.append(button);
+      document.getElementById("edit-column-modal").close();
+      await createThead();
+      await createTBody();
     }
+  });
 
-    return container;
-  }
+  // createTableFooter();
 
-  sectionContainer.appendChild(container);
-
+  createTableStructure();
   createThead();
   createTBody();
-  createTableFooter();
-
-  container.appendChild(table);
-  return sectionContainer;
-})();
+}
