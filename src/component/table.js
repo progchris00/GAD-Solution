@@ -125,7 +125,7 @@ function createButtons() {
   editColumnButton.addEventListener("click", () => openEditColumnModal());
   createEditColumnModal();
 
-  container.append(exportImportButton, editColumnButton);
+  container.append(exportImportButton, editColumnButton, addButton);
   return container;
 }
 
