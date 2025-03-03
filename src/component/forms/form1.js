@@ -1,39 +1,4 @@
-export function loadModal() {
-  const modal = document.createElement("div");
-  modal.classList.add(
-    "fixed",
-    "inset-0",
-    "flex",
-    "items-center",
-    "justify-center",
-    "bg-black",
-    "bg-opacity-50"
-  );
-
-  const modalContent = document.createElement("div");
-  modalContent.classList.add(
-    "bg-white",
-    "p-6",
-    "rounded-lg",
-    "shadow-lg",
-    "w-auto"
-  );
-
-  const modalHeader = document.createElement("div");
-  modalHeader.classList.add("flex", "justify-between", "items-center", "mb-4");
-
-  const modalTitle = document.createElement("h2");
-  modalTitle.textContent = "I. Pangunahing Impormasyon";
-  modalTitle.classList.add("text-lg", "font-semibold");
-
-  const closeButton = document.createElement("button");
-  closeButton.innerHTML = "&times;";
-  closeButton.classList.add("text-xl", "font-bold", "cursor-pointer");
-  closeButton.addEventListener("click", () => modal.remove());
-
-  modalHeader.append(modalTitle, closeButton);
-
-  // Adjust rowContainers array (6 rows instead of 7)
+export function loadPangunahingImpormasyon(tabContent, tabButton, modal) {
   const rowContainers = Array.from({ length: 6 }, (_, index) => {
     const row = document.createElement("div");
     row.classList.add(
@@ -46,7 +11,53 @@ export function loadModal() {
     return row;
   });
 
-  const inputElements = {}; // Store references to inputs
+  const inputElements = {};
+  const checkboxGroups = {};
+  const requiredFields = ["lastName", "firstName", "age", "birthdate", "sex"];
+  const requiredCheckboxGroups = ["voterStatus", "educationLevel", "sector"];
+
+  function validateFields() {
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      if (!inputElements[field].value.trim()) {
+        isValid = false;
+      }
+    });
+
+    requiredCheckboxGroups.forEach((group) => {
+      const checkboxes = checkboxGroups[group];
+      if (!checkboxes.some((checkbox) => checkbox.checked)) {
+        isValid = false;
+      }
+    });
+
+    const exclamationMark = tabButton.querySelector(".exclamation-mark");
+    if (!isValid) {
+      exclamationMark.classList.remove("hidden");
+    } else {
+      exclamationMark.classList.add("hidden");
+    }
+  }
+
+  const exclamationMark = document.createElement("span");
+  exclamationMark.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+    </svg>
+  `;
+  exclamationMark.classList.add("exclamation-mark", "hidden");
+
+  const tabContentWrapper = document.createElement("div");
+  tabContentWrapper.classList.add("flex", "items-center", "gap-2");
+
+  const tabName = document.createElement("span");
+  tabName.textContent = "Pangunahing Impormasyon";
+  tabContentWrapper.appendChild(tabName);
+  tabContentWrapper.appendChild(exclamationMark);
+
+  tabButton.textContent = "";
+  tabButton.appendChild(tabContentWrapper);
 
   const fields = [
     {
@@ -54,12 +65,14 @@ export function loadModal() {
       name: "lastName",
       row: rowContainers[0],
       type: "text",
+      required: true,
     },
     {
       label: "First Name",
       name: "firstName",
       row: rowContainers[0],
       type: "text",
+      required: true,
     },
     {
       label: "Middle Name",
@@ -68,12 +81,19 @@ export function loadModal() {
       type: "text",
     },
     { label: "Suffix", name: "suffix", row: rowContainers[0], type: "text" },
-    { label: "Age", name: "age", row: rowContainers[1], type: "number" },
+    {
+      label: "Age",
+      name: "age",
+      row: rowContainers[1],
+      type: "number",
+      required: true,
+    },
     {
       label: "Birthdate",
       name: "birthdate",
       row: rowContainers[1],
       type: "date",
+      required: true,
     },
     {
       label: "Birthplace",
@@ -87,6 +107,7 @@ export function loadModal() {
       row: rowContainers[1],
       type: "select",
       options: ["Male", "Female"],
+      required: true,
     },
     {
       label: "House No.",
@@ -204,93 +225,14 @@ export function loadModal() {
       if (field.defaultValue) input.value = field.defaultValue;
     }
 
+    if (field.required) {
+      input.addEventListener("input", validateFields);
+    }
+
     inputElements[field.name] = input;
     fieldContainer.append(label, input);
     field.row.appendChild(fieldContainer);
   });
-
-  function updateAddress() {
-    const houseNo = inputElements.houseNo.value.trim();
-    const purok = inputElements.purok.value.trim();
-    const streetName = inputElements.streetName.value.trim();
-    const barangay = inputElements.barangay.value.trim();
-
-    inputElements.address.value = `${houseNo ? houseNo + ", " : ""}${purok ? "Purok " + purok + ", " : ""}${streetName ? streetName + ", " : ""}${barangay}`;
-  }
-
-  ["houseNo", "purok", "streetName", "barangay"].forEach((name) => {
-    inputElements[name].addEventListener("input", updateAddress);
-  });
-
-  function createCheckboxGroup(title, name, options, container) {
-    const groupContainer = document.createElement("div");
-    groupContainer.classList.add("flex", "flex-col", "gap-2");
-
-    const groupLabel = document.createElement("h1");
-    groupLabel.textContent = title;
-    groupLabel.classList.add("text-sm", "font-semibold");
-
-    const optionsWrapper = document.createElement("div");
-    optionsWrapper.classList.add("grid", "grid-cols-2", "gap-4");
-
-    options.forEach((option) => {
-      const wrapper = document.createElement("label");
-      wrapper.classList.add("flex", "items-center", "gap-2", "relative");
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.name = name;
-      checkbox.value = option.value;
-
-      // Add event listener to enforce single selection
-      checkbox.addEventListener("change", () => {
-        const checkboxes = optionsWrapper.querySelectorAll(
-          `input[name="${name}"]`
-        );
-        checkboxes.forEach((otherCheckbox) => {
-          if (otherCheckbox !== checkbox) {
-            otherCheckbox.checked = false; // Uncheck all other checkboxes
-          }
-        });
-      });
-
-      const label = document.createElement("span");
-      label.textContent = option.label;
-      label.classList.add("text-sm", "font-semibold");
-
-      if (option.value === "Iba pa") {
-        label.classList.add("cursor-pointer");
-
-        const customInput = document.createElement("input");
-        customInput.type = "text";
-        customInput.classList.add(
-          "absolute",
-          "left-20",
-          "border-b",
-          "border-black",
-          "w-32",
-          "outline-none",
-          "bg-transparent",
-          "text-sm",
-          "hidden"
-        );
-
-        checkbox.addEventListener("change", () => {
-          customInput.classList.toggle("hidden", !checkbox.checked);
-          if (checkbox.checked) customInput.focus();
-        });
-
-        wrapper.append(checkbox, label, customInput);
-      } else {
-        wrapper.append(checkbox, label);
-      }
-
-      optionsWrapper.appendChild(wrapper);
-    });
-
-    groupContainer.append(groupLabel, optionsWrapper);
-    container.appendChild(groupContainer);
-  }
 
   const voterStatuses = [
     { value: "Registered", label: "Registered" },
@@ -327,6 +269,79 @@ export function loadModal() {
   );
   createCheckboxGroup("Sector", "sector", sector, rowContainers[5]);
 
+  function createCheckboxGroup(title, name, options, container) {
+    const groupContainer = document.createElement("div");
+    groupContainer.classList.add("flex", "flex-col", "gap-2");
+
+    const groupLabel = document.createElement("h1");
+    groupLabel.textContent = title;
+    groupLabel.classList.add("text-sm", "font-semibold");
+
+    const optionsWrapper = document.createElement("div");
+    optionsWrapper.classList.add("grid", "grid-cols-2", "gap-4");
+
+    const checkboxes = [];
+    options.forEach((option) => {
+      const wrapper = document.createElement("label");
+      wrapper.classList.add("flex", "items-center", "gap-2", "relative");
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = name;
+      checkbox.value = option.value;
+
+      checkbox.addEventListener("change", () => {
+        const checkboxes = optionsWrapper.querySelectorAll(
+          `input[name="${name}"]`
+        );
+        checkboxes.forEach((otherCheckbox) => {
+          if (otherCheckbox !== checkbox) {
+            otherCheckbox.checked = false;
+          }
+        });
+        validateFields();
+      });
+
+      const label = document.createElement("span");
+      label.textContent = option.label;
+      label.classList.add("text-sm", "font-semibold");
+
+      if (option.value === "Iba pa") {
+        label.classList.add("cursor-pointer");
+
+        const customInput = document.createElement("input");
+        customInput.type = "text";
+        customInput.classList.add(
+          "absolute",
+          "left-20",
+          "border-b",
+          "border-black",
+          "w-32",
+          "outline-none",
+          "bg-transparent",
+          "text-sm",
+          "hidden"
+        );
+
+        checkbox.addEventListener("change", () => {
+          customInput.classList.toggle("hidden", !checkbox.checked);
+          if (checkbox.checked) customInput.focus();
+        });
+
+        wrapper.append(checkbox, label, customInput);
+      } else {
+        wrapper.append(checkbox, label);
+      }
+
+      optionsWrapper.appendChild(wrapper);
+      checkboxes.push(checkbox);
+    });
+
+    checkboxGroups[name] = checkboxes;
+    groupContainer.append(groupLabel, optionsWrapper);
+    container.appendChild(groupContainer);
+  }
+
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("flex", "justify-end", "gap-4", "mt-4");
 
@@ -355,104 +370,5 @@ export function loadModal() {
 
   buttonContainer.append(cancelButton, submitButton);
 
-  // Tab creation
-  const tabsContainer = document.createElement("div");
-  tabsContainer.classList.add("flex", "border-b", "border-gray-300");
-
-  const tabs = [
-    "Pangunahing Impormasyon",
-    "Miyembro ng Sambahayan",
-    "Tungkol sa Tahanan",
-    "Tubig System",
-    "Ibang Impormasyon",
-  ];
-  const tabContents = [];
-
-  tabs.forEach((tab, index) => {
-    const tabButton = document.createElement("button");
-    tabButton.textContent = tab;
-    tabButton.classList.add(
-      "py-2",
-      "px-4",
-      "cursor-pointer",
-      "focus:outline-none",
-      "hover:bg-gray-200"
-    );
-    tabButton.addEventListener("click", () => switchTab(index));
-    tabsContainer.appendChild(tabButton);
-
-    const tabContent = document.createElement("div");
-    tabContent.classList.add("tab-content", "hidden");
-    tabContents.push(tabContent);
-  });
-
-  const tabContainers = [
-    createPersonalInfoSection(),
-    createHouseholdMemberSection(),
-    createHouseholdInfoSection(),
-    createWaterSystemSection(),
-    createAdditionalInfoSection(),
-  ];
-
-  function switchTab(index) {
-    tabContents.forEach((content) => content.classList.add("hidden"));
-    tabContents[index].classList.remove("hidden");
-
-    // Optional: Highlight the active tab
-    tabsContainer.querySelectorAll("button").forEach((btn, i) => {
-      btn.classList.toggle("bg-gray-300", i === index);
-    });
-
-    // Update modal title based on tab
-    modalTitle.textContent = tabs[index];
-  }
-
-  // Helper function for each section
-  function createPersonalInfoSection() {
-    const section = document.createElement("div");
-    section.classList.add("tab-content", "hidden");
-    section.textContent = "Personal Info Content Here";
-    return section;
-  }
-
-  function createHouseholdMemberSection() {
-    const section = document.createElement("div");
-    section.classList.add("tab-content", "hidden");
-    section.textContent = "Household Members Info Here";
-    return section;
-  }
-
-  function createHouseholdInfoSection() {
-    const section = document.createElement("div");
-    section.classList.add("tab-content", "hidden");
-    section.textContent = "Household Info Here";
-    return section;
-  }
-
-  function createWaterSystemSection() {
-    const section = document.createElement("div");
-    section.classList.add("tab-content", "hidden");
-    section.textContent = "Water System Info Here";
-    return section;
-  }
-
-  function createAdditionalInfoSection() {
-    const section = document.createElement("div");
-    section.classList.add("tab-content", "hidden");
-    section.textContent = "Additional Info Here";
-    return section;
-  }
-
-  // Set initial tab
-  switchTab(0);
-
-  modalContent.append(
-    tabsContainer,
-    modalHeader,
-    ...rowContainers,
-    buttonContainer,
-    ...tabContainers
-  );
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
+  tabContent.append(...rowContainers, buttonContainer);
 }
