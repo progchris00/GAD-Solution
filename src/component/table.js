@@ -125,7 +125,7 @@ function createButtons() {
   editColumnButton.addEventListener("click", () => openEditColumnModal());
   createEditColumnModal();
 
-  container.append(exportImportButton, editColumnButton, addButton);
+  container.append(exportImportButton, editColumnButton);
   return container;
 }
 
@@ -215,15 +215,24 @@ function createMainTable() {
 
     const trElement = document.createElement("tr");
 
-    tableHeading.forEach((heading) => {
-      if (heading.state === "ACTIVE") {
-        const thElement = document.createElement("th");
-        thElement.className = "p-2 font-semibold";
-        thElement.setAttribute("scope", "col");
-        thElement.textContent = heading.name;
-        trElement.appendChild(thElement);
-      }
-    });
+    if (tableHeading.length == 0) {
+      const tdElement = document.createElement("td");
+      tdElement.className =
+        "text-gray-700 cursor-not-allowed p-2 font-semibold";
+      tdElement.textContent =
+        "Error fetching headers. Try refreshing or contact your system administrator. ";
+      trElement.append(tdElement);
+    } else {
+      tableHeading.forEach((heading) => {
+        if (heading.state === "ACTIVE") {
+          const thElement = document.createElement("th");
+          thElement.className = "p-2 font-semibold";
+          thElement.setAttribute("scope", "col");
+          thElement.textContent = heading.name;
+          trElement.appendChild(thElement);
+        }
+      });
+    }
 
     theadElement.appendChild(trElement);
   }
@@ -239,22 +248,33 @@ function createMainTable() {
 
     const { data } = await getData();
 
-    data.forEach((person) => {
+    if (data.length == 0) {
       const trElement = document.createElement("tr");
-
-      activeTableHeading.forEach((key) => {
-        const tdElement = document.createElement("td");
-        if (key in person) {
-          if (typeof person[key] === "object") {
-            tdElement.textContent = person[key].name ? person[key].name : "n/a";
-          } else {
-            tdElement.textContent = person[key] ? person[key] : "n/a";
-          }
-          trElement.append(tdElement);
-        }
-      });
+      const tdElement = document.createElement("td");
+      tdElement.className = "text-gray-500 italic cursor-not-allowed p-2";
+      tdElement.textContent = "No data to show.";
+      trElement.append(tdElement);
       tBody.append(trElement);
-    });
+    } else {
+      data.forEach((person) => {
+        const trElement = document.createElement("tr");
+
+        activeTableHeading.forEach((key) => {
+          const tdElement = document.createElement("td");
+          if (key in person) {
+            if (typeof person[key] === "object") {
+              tdElement.textContent = person[key].name
+                ? person[key].name
+                : "n/a";
+            } else {
+              tdElement.textContent = person[key] ? person[key] : "n/a";
+            }
+            trElement.append(tdElement);
+          }
+        });
+        tBody.append(trElement);
+      });
+    }
   }
 
   function createTableFooter() {
