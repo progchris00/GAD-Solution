@@ -21,7 +21,7 @@ function attachListener() {
   document.getElementById("view-graph-btn").addEventListener("click", () => {
     loadGraphSection();
   });
-  document.getElementById("view-add-btn").addEventListener("click", () => {
-    loadForm();
-  });
+  // document.getElementById("view-add-btn").addEventListener("click", () => {
+  //   loadForm();
+  // });
 }
